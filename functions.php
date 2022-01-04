@@ -91,7 +91,7 @@
 // slug
 // korona-vis-dar-nesitraukia
 
-$title = ('Mano neidomi sulaiziau');
+$title = ('Mano neidomi antraste');
 $slug = getSlug($title);
 
 function getSlug($title){
