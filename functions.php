@@ -74,14 +74,30 @@
 //     echo 'Emailas nevalidus';
 // }
 
-$name = 'Deividas';
-$surname = 'Kravcenko';
+// $name = 'Deividas';
+// $surname = 'Kravcenko';
 
-// nick turi gautis = deikra;
-echo getNickName($name, $surname);
+// // nick turi gautis = deikra;
+// echo getNickName($name, $surname);
 
-function getNickName($name, $surname){
-    $firstNameLetters = substr($name, offset: 0, length: 3);
-    $firstSurNameLetters = substr($surname, offset: 0, length: 3);
-    return strtolower(substr($name, 0, 3) . substr($surname, 0,3) . rand(1,100));
+// function getNickName($name, $surname){
+//     $firstNameLetters = substr($name, offset: 0, length: 3);
+//     $firstSurNameLetters = substr($surname, offset: 0, length: 3);
+//     return strtolower(substr($name, 0, 3) . substr($surname, 0,3) . rand(1,100));
+// }
+
+// Korona vis dar nesitraukia
+
+// slug
+// korona-vis-dar-nesitraukia
+
+$title = ('Mano neidomi antraste');
+$slug = getSlug($title);
+
+function getSlug($title){
+    $title = str_replace(" ", "-", $title);
+    $title = strtolower($title);
+    return $title;
 }
+echo $slug;
+
