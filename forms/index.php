@@ -20,7 +20,6 @@
                 <h1>Mano Title</h1>
                 <p>Zemiau bandziau suprogramuoti skaiciuotuva...</p>
             <form action="functions.php" method="post">
-            <form action="functions.php" method="post">
                      <input type="number" name="number">
                      <select name="veiksmas">
                         <option value="*">*</option>
@@ -30,7 +29,6 @@
                     </select>
                     <input type="number" name="number2">
                     <input type="submit" value="skaiciuoti" name="submit">
-</form>
             </form>
         <div> 
     </body>
