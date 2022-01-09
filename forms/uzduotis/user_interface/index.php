@@ -28,4 +28,4 @@
 </html>
 *Registruojantis pachekinti, ar emailas laisvas. #galima su $foreach <br>
 *Perkurti registracija, kad saugotu nickname, jei nickname jau yra prideti, skaiciu gale.<br>
-*Jei vartotojas nepzymi sutikimo su salygomis, jo nerigistruoti.
+*Jei vartotojas nepzymi sutikimo su salygomis, jo neregistruoti.

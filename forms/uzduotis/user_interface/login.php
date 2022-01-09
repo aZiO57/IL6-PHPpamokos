@@ -14,7 +14,6 @@ $users = readFromCsv('users.csv');
 $login = false;
 foreach ($users as $user) {
 
-
     if ($password === $user[3] && $email === $user[2]) {
         $login = true;
         break;
