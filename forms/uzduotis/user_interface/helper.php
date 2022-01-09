@@ -1,21 +1,50 @@
 <?php
 
-function clearEmail($email){
+function clearEmail($email)
+{
     return trim(strtolower($email));
 }
 
-function isEmailValid($email){
+function isEmailValid($email)
+{
     return strpos($email, "@") !== false;
 }
 
-function isPasswordValid($pass1, $pass2){
+function isPasswordValid($pass1, $pass2)
+{
     return $pass1 === $pass2 && strlen($pass1) > 8;
 }
 
-function writeToCsv($data, $fileName){
+function hashPassword($password)
+{
+    return md5(md5($password) . 'druska');
+}
+
+function writeToCsv($data, $fileName)
+{
     $file = fopen($fileName, 'a');
-    foreach ($data as $element){
+    foreach ($data as $element) {
         fputcsv($file, $element);
     }
     fclose($file);
+}
+function readFromCsv($fileName)
+{
+    $data = [];
+    $file = fopen($fileName, $mode = 'r');
+    while (!feof($file)) {
+        $line = fgetcsv($file);
+        if (!empty($line)) {
+            $data[] = $line;
+        }
+    }
+    fclose($file);
+    return $data;
+}
+
+function debug($data)
+{
+    echo '<pre>';
+    var_dump($data);
+    die();
 }

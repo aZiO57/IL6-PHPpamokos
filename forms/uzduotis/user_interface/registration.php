@@ -17,8 +17,9 @@ $email = clearEmail($email);
 
 if (isPasswordValid($password, $password2) && isEmailValid($email)) {
     $data = [];
+    $password = hashPassword($password);
     $data[] = [$firstName, $lastName, $email, $password];
     writeToCsv($data, 'users.csv');
-}else{
+} else {
     echo 'Patikrinkite duomenis ir pabandykite dar karta.';
 }
