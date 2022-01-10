@@ -1,4 +1,9 @@
 <?php
+const EMAIL_FIELD_KEY = 2;
+
+const NICKNAME_FIELD_KEY = 3;
+
+const PASSWORD_FIELD_KEY = 4;
 
 function clearEmail($email)
 {
@@ -31,7 +36,7 @@ function writeToCsv($data, $fileName)
 function readFromCsv($fileName)
 {
     $data = [];
-    $file = fopen($fileName, $mode = 'r');
+    $file = fopen($fileName, 'r');
     while (!feof($file)) {
         $line = fgetcsv($file);
         if (!empty($line)) {
@@ -40,6 +45,19 @@ function readFromCsv($fileName)
     }
     fclose($file);
     return $data;
+}
+function isValueUniq($value, $key){
+    $users = readFromCsv('users.csv');
+    foreach ($users as $user) {
+        if ($user[$key] === $value) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function generateNickName($firstName, $lastName){
+    return strtolower(substr($firstName, 0, 3) . substr($lastName, 0, 3));
 }
 
 function debug($data)
