@@ -1,0 +1,14 @@
+rock,scissors,win
+paper,rock,win
+rock,paper,lost
+rock,scissors,win
+paper,scissors,lost
+paper,paper,draw
+rock,scissors,win
+rock,scissors,win
+rock,scissors,win
+rock,paper,lost
+paper,paper,draw
+rock,scissors,win
+rock,paper,lost
+rock,rock,draw
