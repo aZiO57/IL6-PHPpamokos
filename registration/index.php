@@ -29,26 +29,27 @@ $inputs = [
     [
         'type' => 'select',
         'name' => 'childrens_number',
-        'options' => [0, 1, 2, 3, '4+']
+        'options' => [0,1,2,3, '4+']
     ],
     [
         'type' => 'textarea',
-        'name' => 'comment'
-    ]
+        'name' => 'textarea',
+        'placeholder' => "Cia rasomas tekstas",
+        'maxlength' => '30',
+        'rows' => '2'
+    ],
 ];
 
 echo '<form action="registration.php" method="post">';
 
-foreach ($inputs as $input) {
-    if ($input['type'] !== 'select') {
-        echo generateInput($input) . '<br>';
-    } else {
-        echo generateSelect($input);
+foreach ($inputs as $input){
+    if($input['type'] === 'select'){
+        echo generateSelect($input).'<br>';
     }elseif($input['type'] === 'textarea'){
-        echo generateTextArea($input);
-    }else
+        echo generateTextarea($input).'<br>';
+    }else{
+        echo generateInput($input).'<br>';
+    }
 }
-// Sukurti textarea !!!!!!!!!!!
-?>   
-
-
+ 
+echo '</form>';

@@ -32,6 +32,15 @@ function generateSelect($data){
     return $select;
 }
 
+function generateTextarea($data){
+    $input = '';
+    $input .= '<textarea ';
+    foreach ($data as $key => $value){
+        $input .= $key.'="'.$value.'" ';
+    }
+    $input .= '></textarea>';
+    return $input;
+}
 
 
 // <select name="childrens_count">
