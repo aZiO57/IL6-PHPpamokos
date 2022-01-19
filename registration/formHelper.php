@@ -24,7 +24,6 @@ function generateInput($data){
 function generateSelect($data){
     $select = '';
     $select .= '<select name="'.$data ['name']. '">';
-
     foreach ($data['options'] as $option){
         $select .= '<option value="'.$option.'">"'.$option.'"</option>';
     }

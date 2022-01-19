@@ -36,7 +36,7 @@ $inputs = [
         'name' => 'textarea',
         'placeholder' => "Cia rasomas tekstas",
         'maxlength' => '30',
-        'rows' => '2'
+        'rows' => '3'
     ],
 ];
 
@@ -51,5 +51,5 @@ foreach ($inputs as $input){
         echo generateInput($input).'<br>';
     }
 }
- 
+
 echo '</form>';
