@@ -14,7 +14,6 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-
 if (isset($_POST['create'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
