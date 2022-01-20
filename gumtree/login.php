@@ -1,7 +1,7 @@
 <?php
 
 $email = $_POST['email'];
-$userPassword = $_POST['password'];
+$userPassword = ($_POST['password']);
 
 $servername = "localhost";
 $username = "root";
@@ -16,6 +16,13 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-$sql = 'SELECT * FROM users = WHERE email ="' . $email . '" AND password ="' . $userPassword . '"';
-$sql2 = 'SELECT * FROM users = WHERE email ="' . $email . '" AND password ="' . $userPassword;
-echo $sql . '<br>' . $sql2;
+$sql = ' SELECT * FROM users WHERE email ="' . $email . '" AND password ="' . $userPassword . '"';
+echo $sql;
+$rez = $conn->query($sql);
+$user = $rez->fetchAll();
+
+if (!empty($user)) {
+    // login
+} else {
+    echo 'Check your login information';
+}
