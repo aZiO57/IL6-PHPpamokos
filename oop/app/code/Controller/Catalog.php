@@ -4,15 +4,17 @@ namespace Controller;
 
 class Catalog
 {
-    public function show($id)
+    public function show($id = null)
     {
-        echo 'Catalog controller ID ' . $id;
+        if ($id !== null) {
+            echo 'Catalog controller ID ' . $id;
+        }
     }
 
-    public function all($id)
+    public function all()
     {
         for ($i = 0; $i < 10; $i++) {
-            echo '<a href="http://127.0.0.1:8001/index.php/catalog/show/' . $i . '">Read more</a>';
+            echo '<a href="http://127.0.0.1:8000/index.php/catalog/show/' . $i . '">Read more</a>';
             echo '<br>';
         }
     }
@@ -23,5 +25,6 @@ class Catalog
 
     public function update($data)
     {
+        echo 'I\'m Robot';
     }
 }
