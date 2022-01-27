@@ -8,7 +8,7 @@ class FormHelper
 
     public function __construct($action, $method)
     {
-        $this->form = '<form action="' . $action . '" method="' . $method . '">';
+        $this->form = '<form action="' . BASE_URL . $action . '" method="' . $method . '">';
     }
 
     /**
@@ -39,7 +39,6 @@ class FormHelper
         $this->form .= ' ><br><br>';
         // <form action="registration.php" method="POST"><input type="email" name="email"
         // placeholder="john@gmail.com" ><input type="password" name="password" placeholder="*****";
-
 
     }
 
