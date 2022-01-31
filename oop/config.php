@@ -1,7 +1,7 @@
 <?php
 
-define('BASE_URL', 'http://localhost:8000/oop/index.php/');
-define('SERVERNAME', 'localhost');
+define('BASE_URL', 'http://localhost/Pamokos/oop/index.php/');
+define('SERVERNAME', '127.0.0.1');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
-define('DB_NAME', 'Template Name');
+define('DB_NAME', 'auto_minusas');

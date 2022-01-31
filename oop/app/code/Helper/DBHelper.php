@@ -11,13 +11,12 @@ class DBHelper
     public function __construct()
     {
         $this->sql = '';
-
         try {
             $this->conn = new \PDO("mysql:host=" . SERVERNAME . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            //echo "Connected successfully";
+            echo "Connected successfully";
         } catch (\PDOException $e) {
-            //echo "Connection failed: " . $e->getMessage();
+            echo "Connection failed: " . $e->getMessage();
         }
     }
 
@@ -29,13 +28,13 @@ class DBHelper
 
     public function from($table)
     {
-        $this->sql .= ' FROM ' . $table . ' ';
+        $this->sql .= 'FROM ' . $table . ' ';
         return $this;
     }
 
     public function where($field, $value, $operator = '=')
     {
-        $this->sql .= ' WHERE ' . $field . $operator . '"' . $value . '"';
+        $this->sql .= 'WHERE ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
 
@@ -72,9 +71,11 @@ class DBHelper
         $this->sql .= 'INSERT INTO ' . $table .
             ' (' . implode(',', array_keys($data)) . ')
              VALUES ("' . implode('","', $data) . '")';
+        return $this;
     }
 
-    public function update()
+
+    public function update($data, $table)
     {
     }
 }
