@@ -9,7 +9,7 @@ class Validator
         return $pass === $pass2;
     }
 
-    public static function chekEmail($email)
+    public static function checkEmail($email)
     {
         return strpos($email, '@');
     }
