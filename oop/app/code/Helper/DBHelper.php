@@ -13,10 +13,10 @@ class DBHelper
         $this->sql = '';
 
         try {
-            $this->conn = new PDO("mysql:host=" . SERVERNAME . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conn = new \PDO("mysql:host=" . SERVERNAME . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+            $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             //echo "Connected successfully";
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             //echo "Connection failed: " . $e->getMessage();
         }
     }
@@ -62,5 +62,19 @@ class DBHelper
         $rez = $this->conn->query($this->sql);
         $data = $rez->fetchAll();
         return $data[0];
+    }
+
+    // name => Deividas,
+    // last_name => Kravcenko
+    // name,last_name,email
+    public function insert($table, $data)
+    {
+        $this->sql .= 'INSERT INTO ' . $table .
+            ' (' . implode(',', array_keys($data)) . ')
+             VALUES ("' . implode('","', $data) . '")';
+    }
+
+    public function update()
+    {
     }
 }

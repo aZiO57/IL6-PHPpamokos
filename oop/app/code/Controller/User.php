@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Validator;
 use Model\User as UserModel;
@@ -15,6 +16,9 @@ class User
 
     public function register()
     {
+
+        $db = new DBHelper();
+
         $form = new FormHelper('user/create', 'POST');
 
         $form->input([
@@ -30,12 +34,12 @@ class User
         $form->input([
             'name' => 'password',
             'type' => 'password',
-            'placeholder' => '******'
+            'placeholder' => '* * * * * *'
         ]);
         $form->input([
             'name' => 'password2',
             'type' => 'password',
-            'placeholder' => '******'
+            'placeholder' => '* *** **2'
         ]);
         $form->input([
             'name' => 'create',
@@ -45,6 +49,7 @@ class User
 
         echo $form->getForm();
     }
+
     public function login()
     {
         $form = new FormHelper('user/check', 'POST');
@@ -56,22 +61,29 @@ class User
         $form->input([
             'name' => 'password',
             'type' => 'password',
-            'placeholder' => '******'
+            'placeholder' => '* * * * * *'
         ]);
         $form->input([
             'name' => 'login',
             'type' => 'submit',
             'value' => 'login'
         ]);
+
         echo $form->getForm();
     }
 
     public function create()
     {
         $passMatch = Validator::checkPassword($_POST['password'], $_POST['password2']);
-        $isEmailValid = Validator::chekEmail($_POST['email']);
+        $isEmailValid = Validator::checkEmail($_POST['email']);
         $isEmailUnic = UserModel::emailUnic($_POST['email']);
-        if ($passMatch  && $isEmailValid && $isEmailUnic) {
+        if ($passMatch && $isEmailValid && $isEmailUnic) {
+            $user = new UserModel();
+
+            $user->setName($_POST['name']);
+            $user->setLastName($_POST['name']);
+            $user->setEmail($_POST['email']);
+            $user->save();
         }
     }
 }
