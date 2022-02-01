@@ -140,4 +140,23 @@ class User
         $rez = $db->select()->from('users')->where('email', $email)->get();
         return empty($rez);
     }
+
+    public static function checkLoginCredentials($email, $pass)
+    {
+        $db = new DBHelper();
+        $rez = $db
+            ->select('id')
+            ->from('users')
+            ->where('email', $email)
+            ->andWhere('Password', $pass)
+            ->getOne();
+
+        if (isset($rez['id'])) {
+            return $rez['id'];
+        } else {
+            return false;
+        }
+
+        // (one liner) return isset($rez['id']) ? $rez['id'] : false;
+    }
 }

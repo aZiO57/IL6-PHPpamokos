@@ -34,7 +34,18 @@ class DBHelper
 
     public function where($field, $value, $operator = '=')
     {
-        $this->sql .= 'WHERE ' . $field . $operator . '"' . $value . '"';
+        $this->sql .= ' WHERE ' . $field . $operator . '"' . $value . '"';
+        return $this;
+    }
+
+    public function andWhere($field, $value, $operator = '=')
+    {
+        $this->sql .= ' AND ' . $field . $operator . '"' . $value . '"';
+        return $this;
+    }
+    public function orWhere($field, $value, $operator = '=')
+    {
+        $this->sql .= ' OR ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
 
@@ -60,11 +71,15 @@ class DBHelper
     {
         $rez = $this->conn->query($this->sql);
         $data = $rez->fetchAll();
-        return $data[0];
+        if (!empty($data)) {
+            return $data[0];
+        } else {
+            return [];
+        }
     }
 
     // name => Deividas,
-    // last_name => Kravcenko
+    // last_name => Kravčenko
     // name,last_name,email
     public function insert($table, $data)
     {
@@ -75,7 +90,23 @@ class DBHelper
     }
 
 
-    public function update($data, $table)
+    public function update($table, $data)
     {
+        $this->sql .= 'UPDATE ' . $table . ' SET ';
+        // UPDATE users SET ;
+        $values = [];
+        foreach ($data as $column => $value) {
+            $values[] = "$column = '$value'";
+            // name = 'Deividas'
+            // last_name = 'Kravčenko'
+        }
+        // UPDATE users SET name = 'Deividas', last_name = 'Kravčenko'
+        $this->sql .= implode(',', $values);
+        return $this;
+    }
+
+    public function limit($number)
+    {
+        $this->slq .= ' LIMIT ' . $number;
     }
 }

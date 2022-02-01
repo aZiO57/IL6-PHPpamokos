@@ -100,4 +100,17 @@ class User
         //     echo ' registration invalid';
         // }
     }
+
+    public function check()
+    {
+        $email = $_POST['email'];
+        $password = md5($_POST['password']);
+        $userId = UserModel::checkLoginCredentials($email, $password);
+        if ($userId) {
+            $user = new UserModel();
+            $user->load($userId);
+        } else {
+            echo 'Something went wrong';
+        }
+    }
 }
