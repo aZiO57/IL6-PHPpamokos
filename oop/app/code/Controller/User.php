@@ -6,6 +6,7 @@ use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Validator;
 use Model\User as UserModel;
+use Model\Cities as CitiesModel;
 
 class User
 {
@@ -51,6 +52,12 @@ class User
             'type' => 'password',
             'placeholder' => '* * * * * '
         ]);
+        $form->input([
+            'name' => 'city',
+            'type' => 'select',
+        ]);
+        $form->select($data);
+
         $form->input([
             'name' => 'create',
             'type' => 'submit',
@@ -104,7 +111,7 @@ class User
     public function check()
     {
         $email = $_POST['email'];
-        $password = md5($_POST['password']);
+        $password = ($_POST['password']);
         $userId = UserModel::checkLoginCredentials($email, $password);
         if ($userId) {
             $user = new UserModel();
