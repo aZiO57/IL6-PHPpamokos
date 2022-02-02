@@ -5,8 +5,8 @@ namespace Controller;
 use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Validator;
+use Model\City;
 use Model\User as UserModel;
-use Model\Cities as CitiesModel;
 
 class User
 {
@@ -17,8 +17,6 @@ class User
 
     public function register()
     {
-
-        $db = new DBHelper();
 
         $form = new FormHelper('user/create', 'POST');
 
@@ -50,14 +48,17 @@ class User
         $form->input([
             'name' => 'password2',
             'type' => 'password',
-            'placeholder' => '* * * * * '
+            'placeholder' => '* * * * * *'
         ]);
-        $form->input([
-            'name' => 'city',
-            'type' => 'select',
-        ]);
-        $form->select($data);
 
+        $cities = City::getCities();
+        $options = [];
+        foreach ($cities as $city) {
+            $key = $city->getId();
+            $options[$key] = $city->getName();
+        }
+
+        $form->select(['name' => 'city_id', 'options' => $options]);
         $form->input([
             'name' => 'create',
             'type' => 'submit',
@@ -94,30 +95,28 @@ class User
         $passMatch = Validator::checkPassword($_POST['password'], $_POST['password2']);
         $isEmailValid = Validator::checkEmail($_POST['email']);
         $isEmailUnic = UserModel::emailUnic($_POST['email']);
-        // if ($passMatch && $isEmailValid && $isEmailUnic) {
-        $user = new UserModel();
-        $user->setName($_POST['name']);
-        $user->setLastName($_POST['last_name']);
-        $user->setPhone($_POST['phone']);
-        $user->setPassword(md5($_POST['password']));
-        $user->setEmail($_POST['email']);
-        $user->setCityId(1);
-        $user->save();
-        // } else {
-        //     echo ' registration invalid';
-        // }
+        if ($passMatch && $isEmailValid && $isEmailUnic) {
+            $user = new UserModel();
+            $user->setName($_POST['name']);
+            $user->setLastName($_POST['last_name']);
+            $user->setPhone($_POST['phone']);
+            $user->setPassword(md5($_POST['password']));
+            $user->setEmail($_POST['email']);
+            $user->setCityId($_POST['city_id']);
+            $user->save();
+        }
     }
 
     public function check()
     {
         $email = $_POST['email'];
-        $password = ($_POST['password']);
+        $password = md5($_POST['password']);
         $userId = UserModel::checkLoginCredentials($email, $password);
         if ($userId) {
             $user = new UserModel();
             $user->load($userId);
         } else {
-            echo 'Something went wrong';
+            echo 'Something goes wrong';
         }
     }
 }
