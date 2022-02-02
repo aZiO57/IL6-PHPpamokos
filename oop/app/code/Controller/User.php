@@ -5,6 +5,7 @@ namespace Controller;
 use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Validator;
+use Helper\Url;
 use Model\City;
 use Model\User as UserModel;
 
@@ -54,8 +55,8 @@ class User
         $cities = City::getCities();
         $options = [];
         foreach ($cities as $city) {
-            $key = $city->getId();
-            $options[$key] = $city->getName();
+            $id = $city->getId();
+            $options[$id] = $city->getName();
         }
 
         $form->select(['name' => 'city_id', 'options' => $options]);
@@ -66,6 +67,48 @@ class User
         ]);
 
         echo $form->getForm();
+    }
+
+    public function Edit()
+    {
+        $form = new FormHelper('user/update', 'POST');
+        $user = new UserModel();
+        $cities = City::getCities();
+
+        $form->input([
+            'name' => 'name',
+            'type' => 'text',
+            'placeholder' => 'Name',
+            'value' => $user->load($_SESSION['user_id'])->getName()
+        ]);
+        $form->input([
+            'name' => 'last_name',
+            'type' => 'text',
+            'placeholder' => 'Last name',
+            'value' => $user->load($_SESSION['user_id'])->getLastName()
+        ]);
+        $form->input([
+            'name' => 'phone',
+            'type' => 'text',
+            'placeholder' => 'Phone (+3706*******)',
+            'value' => $user->load($_SESSION['user_id'])->getPhone()
+        ]);
+        $form->input([
+            'name' => 'email',
+            'type' => 'email',
+            'placeholder' => 'name@mail.com',
+            'value' => $user->load($_SESSION['user_id'])->getEmail()
+        ]);
+        $form->input([
+            'name' => 'password',
+            'type' => 'password',
+            'placeholder' => 'Password'
+        ]);
+        $form->input([
+            'name' => 'edit',
+            'type' => 'submit',
+            'value' => 'Save'
+        ]);
     }
 
     public function login()
@@ -90,6 +133,19 @@ class User
         echo $form->getForm();
     }
 
+    public function update()
+    {
+        $user = new UserModel();
+        $user->load($_SESSION['user_id']);
+        $user->setName($_POST['name']);
+        $user->setLastName($_POST['last_name']);
+        $user->setPhone($_POST['phone']);
+        $user->setPassword(md5($_POST['password']));
+        $user->setEmail($_POST['email']);
+        $user->setCityId($_POST['city_id']);
+        $user->save();
+    }
+
     public function create()
     {
         $passMatch = Validator::checkPassword($_POST['password'], $_POST['password2']);
@@ -104,6 +160,9 @@ class User
             $user->setEmail($_POST['email']);
             $user->setCityId($_POST['city_id']);
             $user->save();
+            Url::redirect('user/loing');
+        } else {
+            echo 'Patikrinkite duomenis';
         }
     }
 
@@ -115,8 +174,17 @@ class User
         if ($userId) {
             $user = new UserModel();
             $user->load($userId);
+            $_SESSION['loggedin'] = true;
+            $_SESSION['user_id'] = $userId;
+            $_SESSION['user'] = $user;
+            Url::redirect('/');
         } else {
-            echo 'Something goes wrong';
+            Url::redirect('user/login');
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
     }
 }
