@@ -58,7 +58,6 @@ class User
             $id = $city->getId();
             $options[$id] = $city->getName();
         }
-
         $form->select(['name' => 'city_id', 'options' => $options]);
         $form->input([
             'name' => 'create',
@@ -69,46 +68,97 @@ class User
         echo $form->getForm();
     }
 
-    public function Edit()
+    public function edit()
     {
-        $form = new FormHelper('user/update', 'POST');
-        $user = new UserModel();
-        $cities = City::getCities();
+        if (!isset($_SESSION['user_id'])) {
+            Url::redirect('user/login');
+        }
 
+        $userId = $_SESSION['user_id'];
+        $user = new UserModel();
+        $user->load($userId);
+
+        $form = new FormHelper('user/update', 'POST');
         $form->input([
             'name' => 'name',
             'type' => 'text',
-            'placeholder' => 'Name',
-            'value' => $user->load($_SESSION['user_id'])->getName()
+            'placeholder' => 'Vardas',
+            'value' => $user->getName()
         ]);
+
         $form->input([
             'name' => 'last_name',
             'type' => 'text',
-            'placeholder' => 'Last name',
-            'value' => $user->load($_SESSION['user_id'])->getLastName()
+            'placeholder' => 'Pavarde',
+            'value' => $user->getLastName()
         ]);
         $form->input([
             'name' => 'phone',
             'type' => 'text',
-            'placeholder' => 'Phone (+3706*******)',
-            'value' => $user->load($_SESSION['user_id'])->getPhone()
+            'placeholder' => '+3706*******',
+            'value' => $user->getPhone()
         ]);
         $form->input([
             'name' => 'email',
             'type' => 'email',
-            'placeholder' => 'name@mail.com',
-            'value' => $user->load($_SESSION['user_id'])->getEmail()
+            'placeholder' => 'Email',
+            'value' => $user->getEmail()
         ]);
         $form->input([
             'name' => 'password',
             'type' => 'password',
-            'placeholder' => 'Password'
+            'placeholder' => '* * * * * *'
         ]);
         $form->input([
-            'name' => 'edit',
-            'type' => 'submit',
-            'value' => 'Save'
+            'name' => 'password2',
+            'type' => 'password',
+            'placeholder' => '* * * * * *'
         ]);
+
+        $cities = City::getCities();
+        $options = [];
+        foreach ($cities as $city) {
+            $id = $city->getId();
+            $options[$id] = $city->getName();
+        }
+        $form->select([
+            'name' => 'city_id',
+            'options' => $options,
+            'selected' => $user->getCityId()
+        ]);
+
+        $form->input([
+            'name' => 'create',
+            'type' => 'submit',
+            'value' => 'Edit'
+        ]);
+
+        echo $form->getForm();
+    }
+
+    public function update()
+    {
+        $userId = $_SESSION['user_id'];
+        $user = new UserModel();
+        $user->load($userId);
+
+        $user->setName($_POST['name']);
+        $user->setLastName($_POST['last_name']);
+        $user->setPhone($_POST['phone']);
+        $user->setCityId($_POST['city_id']);
+
+        if ($_POST['password'] != '' && Validator::checkPassword($_POST['password'], $_POST['password2'])) {
+            $user->setPassword(md5($_POST['password']));
+        }
+
+        if ($user->getEmail() != $_POST['email']) {
+            if (Validator::checkEmail($_POST['email']) && UserModel::emailUnic($_POST['email'])) {
+                $user->setEmail($_POST['email']);
+            }
+        }
+
+        $user->save();
+        Url::redirect('user/edit');
     }
 
     public function login()
@@ -133,19 +183,6 @@ class User
         echo $form->getForm();
     }
 
-    public function update()
-    {
-        $user = new UserModel();
-        $user->load($_SESSION['user_id']);
-        $user->setName($_POST['name']);
-        $user->setLastName($_POST['last_name']);
-        $user->setPhone($_POST['phone']);
-        $user->setPassword(md5($_POST['password']));
-        $user->setEmail($_POST['email']);
-        $user->setCityId($_POST['city_id']);
-        $user->save();
-    }
-
     public function create()
     {
         $passMatch = Validator::checkPassword($_POST['password'], $_POST['password2']);
@@ -160,7 +197,7 @@ class User
             $user->setEmail($_POST['email']);
             $user->setCityId($_POST['city_id']);
             $user->save();
-            Url::redirect('user/loing');
+            Url::redirect('user/login');
         } else {
             echo 'Patikrinkite duomenis';
         }
@@ -170,11 +207,11 @@ class User
     {
         $email = $_POST['email'];
         $password = md5($_POST['password']);
-        $userId = UserModel::checkLoginCredentials($email, $password);
+        $userId = UserModel::checkLoginCredentionals($email, $password);
         if ($userId) {
             $user = new UserModel();
             $user->load($userId);
-            $_SESSION['loggedin'] = true;
+            $_SESSION['logged'] = true;
             $_SESSION['user_id'] = $userId;
             $_SESSION['user'] = $user;
             Url::redirect('/');

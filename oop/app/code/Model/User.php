@@ -89,6 +89,7 @@ class User
         return $this->city;
     }
 
+
     public function setCityId($id)
     {
         $this->cityId = $id;
@@ -130,7 +131,7 @@ class User
         ];
 
         $db = new DBHelper();
-        $db->insert('users', $data)->exec();
+        $db->update('users', $data)->where('id', $this->id)->exec();
     }
 
     public function load($id)
@@ -163,14 +164,14 @@ class User
         return empty($rez);
     }
 
-    public static function checkLoginCredentials($email, $pass)
+    public static function checkLoginCredentionals($email, $pass)
     {
         $db = new DBHelper();
         $rez = $db
             ->select('id')
             ->from('users')
             ->where('email', $email)
-            ->andWhere('Password', $pass)
+            ->andWhere('password', $pass)
             ->getOne();
 
         if (isset($rez['id'])) {
@@ -178,7 +179,6 @@ class User
         } else {
             return false;
         }
-
-        // (one liner) return isset($rez['id']) ? $rez['id'] : false;
+        //return isset($rez['id']) ? $rez['id'] : false;
     }
 }
