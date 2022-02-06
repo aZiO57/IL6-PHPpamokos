@@ -59,7 +59,6 @@ class FormHelper
                 }
             }
 
-            // <option selected value="3">
             $this->form .= ' value="' . $key . '">' . $option . '</option>';
         }
         $this->form .= '</select>';

@@ -89,7 +89,6 @@ class User
         return $this->city;
     }
 
-
     public function setCityId($id)
     {
         $this->cityId = $id;
@@ -179,6 +178,8 @@ class User
         } else {
             return false;
         }
+        // alternative oneliner
         //return isset($rez['id']) ? $rez['id'] : false;
+
     }
 }

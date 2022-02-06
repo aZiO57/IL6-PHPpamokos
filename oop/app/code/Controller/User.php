@@ -211,9 +211,11 @@ class User
         if ($userId) {
             $user = new UserModel();
             $user->load($userId);
+
             $_SESSION['logged'] = true;
             $_SESSION['user_id'] = $userId;
             $_SESSION['user'] = $user;
+
             Url::redirect('/');
         } else {
             Url::redirect('user/login');

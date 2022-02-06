@@ -1,0 +1,10 @@
+I. sukurti skelbimu kurima
+    I.1. Model "ad.php" +
+        1.9. connect user_id
+        + Skelbimu modelis su visasi parametrais/ seteriasi/ geteriais ir metodais, kaip save / load and etc...
+
+    II.1. controller form.(catalog.php sukurti skelbimo sukurimo forma)
+
+    Controlleryje: add(forma) ir create(sukuria objekta) metodai
+
+  
