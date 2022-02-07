@@ -33,10 +33,12 @@ class Catalog
             'type' => 'text',
             'placeholder' => 'Pavadinimas'
         ]);
+
         $form->textArea(
             'description',
             'Aprasymas'
         );
+
         $form->input([
             'name' => 'price',
             'type' => 'number',
@@ -57,7 +59,7 @@ class Catalog
         $form->input([
             'name' => 'createAd',
             'type' => 'submit',
-            'value' => 'Create Ad'
+            'value' => 'Sukurti skelbima'
         ]);
 
         echo $form->getForm();
