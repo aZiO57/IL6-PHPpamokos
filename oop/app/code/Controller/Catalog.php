@@ -45,7 +45,7 @@ class Catalog
 
         $options = [];
 
-        for ($i = 1990; $i <= date('Y'); $i++) {
+        for ($i = 1970; $i <= date('Y'); $i++) {
             $options[$i] = $i;
         }
 
