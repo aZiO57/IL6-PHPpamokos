@@ -31,16 +31,16 @@ class Catalog
         $form->input([
             'name' => 'title',
             'type' => 'text',
-            'placeholder' => 'Ad Title'
+            'placeholder' => 'Pavadinimas'
         ]);
         $form->textArea(
             'description',
-            'Describe your car'
+            'Aprasymas'
         );
         $form->input([
             'name' => 'price',
             'type' => 'number',
-            'placeholder' => 'Price'
+            'placeholder' => 'Kaina'
         ]);
 
         $options = [];
@@ -71,16 +71,20 @@ class Catalog
         $ad = new Ad();
         $ad->setTitle($_POST['title']);
         $ad->setDescription($_POST['description']);
+        $ad->setManufacturerId('1');
+        $ad->setModelId('1');
         $ad->setPrice($_POST['price']);
         $ad->setYear($_POST['years']);
+        $ad->setTypeId('1');
         $ad->setUserId($_SESSION['user_id']);
         $ad->save();
 
         Url::redirect('');
     }
 
-    public function update($data)
+    public function edit($id)
     {
-        echo 'Beep Boop I\'m Robot';
+        $ad = new Ad();
+        $ad->load($id);
     }
 }

@@ -3,8 +3,6 @@
 namespace Model;
 
 use Helper\DBHelper;
-use Helper\FormHelper;
-use Model\User;
 
 class Ad
 {
@@ -14,182 +12,213 @@ class Ad
 
     private $description;
 
-    private $manufacturer_id;
+    private $manufacturerId;
 
     private $modelId;
 
     private $price;
 
-    private $years;
+    private $year;
 
-    private $type_id;
+    private $typeId;
 
-    private $user_id;
+    private $userId;
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * @param mixed $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * @param mixed $description
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
+    /**
+     * @return mixed
+     */
     public function getManufacturerId()
     {
-        return $this->manufacturer_id;
+        return $this->manufacturerId;
     }
 
-    public function setManufacturerId($manufacturer_id)
+    /**
+     * @param mixed $manufacturerId
+     */
+    public function setManufacturerId($manufacturerId)
     {
-        $this->manufacturer_id = $manufacturer_id;
+        $this->manufacturerId = $manufacturerId;
     }
 
+    /**
+     * @return mixed
+     */
     public function getModelId()
     {
-        return $this->model_id;
+        return $this->modelId;
     }
 
-    public function setModelId($model_id)
+    /**
+     * @param mixed $modelId
+     */
+    public function setModelId($modelId)
     {
-        $this->model_id = $model_id;
+        $this->modelId = $modelId;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPrice()
     {
         return $this->price;
     }
 
+    /**
+     * @param mixed $price
+     */
     public function setPrice($price)
     {
         $this->price = $price;
     }
 
+    /**
+     * @return mixed
+     */
     public function getYear()
     {
-        return $this->years;
+        return $this->year;
     }
 
+    /**
+     * @param mixed $year
+     */
     public function setYear($year)
     {
-        $this->years = $year;
+        $this->year = $year;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTypeId()
     {
-        return $this->type_id;
+        return $this->typeId;
     }
 
-    public function setTypeId($type_id)
+    /**
+     * @param mixed $typeId
+     */
+    public function setTypeId($typeId)
     {
-        $this->type_id = $type_id;
+        $this->typeId = $typeId;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUserId()
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId($user_id)
+    /**
+     * @param mixed $userId
+     */
+    public function setUserId($userId)
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
+
 
     public function save()
     {
-        if (!isset($this->id)) {
-            $this->create();
-        } else {
+        if (isset($this->id)) {
             $this->update();
+        } else {
+            $this->create();
         }
     }
 
-    private function create()
+    public function update()
     {
+        $db = new DBHelper();
         $data = [
             'title' => $this->title,
             'description' => $this->description,
-            'manufacturer_id' => 1,
-            'model_id' => 1,
+            'manufacturer_id' => $this->manufacturerId,
+            'model_id' => $this->modelId,
             'price' => $this->price,
-            'years' => $this->years,
-            'type_id' => 1,
-            'user_id' => $this->user_id
+            'year' => $this->year,
+            'type_id' => $this->typeId,
+            'user_id' => $this->userId,
         ];
 
-        $db = new DBHelper();
-        $db->insert('ads', $data)->exec();
+        $db->update('ads', $data)->where('id', $this->id)->exec();
     }
 
-    private function update()
+    public function create()
     {
-        // $data = [
-        //     'title' => $this->title,
-        //     'description' => $this->description,
-        //     'manufacturer_id' => $this->manufacturerId,
-        //     'model_id' => $this->modelId,
-        //     'price' => $this->price,
-        //     'years' => $this->years,
-        //     'type_id' => $this->typeId,
-        // ];
-
-        // $db = new DBHelper();
-        // $db->update('users', $data)->where('id', $this->id)->exec();
+        $db = new DBHelper();
+        $data = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'manufacturer_id' => $this->manufacturerId,
+            'model_id' => $this->modelId,
+            'price' => $this->price,
+            'year' => $this->year,
+            'type_id' => $this->typeId,
+            'user_id' => $this->userId,
+        ];
+        $db->insert('ads', $data)->exec();
     }
 
     public function load($id)
     {
-        // $db = new DBHelper();
-        // $data = $db->select()->from('ads')->where('id', $id)->getOne();
-        // $this->id = $data['id'];
-        // $this->title = $data['title'];
-        // $this->description = $data['description'];
-        // $this->manufacturerId = $data['manufacturer_id'];
-        // $this->modelId = $data['model_id'];
-        // $this->price = $data['price'];
-        // $this->years = $data['years'];
-        // $this->typeId = $data['type_id'];
-
-        // return $this;
-    }
-
-    public function delete()
-    {
-        // $db = new DBHelper();
-        // $db->delete()->from('ads')->where('id', $this->id)->exec();
-    }
-
-    public static function checkLoginCredentionals($email, $pass)
-    {
         $db = new DBHelper();
-        $rez = $db
-            ->select('id')
-            ->from('users')
-            ->where('email', $email)
-            ->andWhere('password', $pass)
-            ->getOne();
-
-        if (isset($rez['id'])) {
-            return $rez['id'];
-        } else {
-            return false;
+        $ad = $db->select()->from('ads')->where('id', $id)->getOne();
+        if (!empty($ad)) {
+            $this->id = $ad['id'];
+            $this->title = $ad['title'];
+            $this->manufacturerId = $ad['manufacturer_id'];
+            $this->modelId = $ad['mdoel_id'];
+            $this->price = $ad['price'];
+            $this->year = $ad['year'];
+            $this->typeId = $ad['type_id'];
+            $this->userId = $ad['user_id'];
         }
-        //return isset($rez['id']) ? $rez['id'] : false;
+
+        return $this;
     }
 }

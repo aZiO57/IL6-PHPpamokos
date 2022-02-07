@@ -14,7 +14,7 @@ class DBHelper
         try {
             $this->conn = new \PDO("mysql:host=" . SERVERNAME . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
+            // echo "Connected successfully";
         } catch (\PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
