@@ -25,7 +25,7 @@ class Catalog extends AbstractController
         }
     }
 
-    public function createAd()
+    public function add()
     {
         $form = new FormHelper('catalog/create/', 'POST');
 
