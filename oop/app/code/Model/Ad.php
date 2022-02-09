@@ -24,6 +24,8 @@ class Ad
 
     private $userId;
 
+    private $image;
+
 
     public function getId()
     {
@@ -113,18 +115,25 @@ class Ad
         $this->typeId = $typeId;
     }
 
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
 
     public function getUserId()
     {
         return $this->userId;
     }
 
-
     public function setUserId($userId)
     {
         $this->userId = $userId;
     }
-
 
     public function save()
     {
@@ -147,6 +156,7 @@ class Ad
             'years' => $this->year,
             'type_id' => $this->typeId,
             'user_id' => $this->userId,
+            'image' => $this->image,
         ];
 
         $db->update('ads', $data)->where('id', $this->id)->exec();
@@ -165,8 +175,10 @@ class Ad
             'years' => $this->year,
             'type_id' => $this->typeId,
             'user_id' => $this->userId,
+            'image' => $this->image,
         ];
         $db->insert('ads', $data)->exec();
+        echo 'Sucessfully created Ad';
     }
 
     public function load($id)

@@ -10,12 +10,11 @@ use Model\Ad;
 
 class Catalog extends AbstractController
 {
-    // public function show($id = null)
-    // {
-    //     if ($id !== null) {
-    //         echo 'Catalog controller ID ' . $id;
-    //     }
-    // }
+    public function show($id)
+    {
+        $ad = new Ad();
+        $ad->load($id);
+    }
 
     public function all()
     {
@@ -58,6 +57,12 @@ class Catalog extends AbstractController
         ]);
 
         $form->input([
+            'name' => 'image',
+            'type' => 'text',
+            'placeholder' => 'image_URL'
+        ]);
+
+        $form->input([
             'name' => 'createAd',
             'type' => 'submit',
             'value' => 'Sukurti skelbima'
@@ -80,6 +85,7 @@ class Catalog extends AbstractController
         $ad->setYear($_POST['year']);
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
+        $ad->setImage($_POST['image']);
         $ad->save();
 
         Url::redirect('');
@@ -95,7 +101,7 @@ class Catalog extends AbstractController
         $ad->setManufacturerId(1);
         $ad->setModelId(1);
         $ad->setPrice($_POST['price']);
-        $ad->setYear($_POST['year']);
+        $ad->setYear($_POST['years']);
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
         $ad->save();
@@ -108,7 +114,6 @@ class Catalog extends AbstractController
         }
         $ad = new Ad();
         $ad->load($id);
-
 
         if ($_SESSION['user_id'] != $ad->getUserId()) {
             Url::redirect('');
@@ -126,7 +131,6 @@ class Catalog extends AbstractController
             'name' => 'id',
             'type' => 'hiden',
             'value' => $ad->getId()
-
         ]);
 
         $form->textArea('description', $ad->getDescription());
@@ -136,11 +140,23 @@ class Catalog extends AbstractController
             'placeholder' => 'Kaina',
             'value' => $ad->getPrice()
         ]);
+
+        $options = [];
+
+        for ($i = 1970; $i <= date('Y'); $i++) {
+            $options[$i] = $i;
+        }
+
+        $form->select([
+            'name' => 'years',
+            'options' => $options
+
+        ]);
+        // delete if fail
         $form->input([
-            'name' => 'year',
+            'name' => 'image',
             'type' => 'text',
-            'placeholder' => 'Metai',
-            'value' => $ad->getYear()
+            'placeholder' => 'image_URL'
         ]);
 
         $form->input([
