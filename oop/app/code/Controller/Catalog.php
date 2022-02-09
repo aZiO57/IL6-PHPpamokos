@@ -103,7 +103,7 @@ class Catalog extends AbstractController
 
     public function edit($id)
     {
-        if ($_SESSION['user_id'] != $ad->getUserId()) {
+        if (!isset($_SESSION['user_id'])) {
             Url::redirect('');
         }
         $ad = new Ad();
