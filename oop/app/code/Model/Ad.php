@@ -3,10 +3,10 @@
 namespace Model;
 
 use Helper\DBHelper;
+use Core\AbstractModel;
 
-class Ad
+class Ad extends AbstractModel
 {
-    private $id;
 
     private $title;
 
@@ -26,98 +26,140 @@ class Ad
 
     private $image;
 
+    private $active;
 
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        $this->table = 'ads';
     }
 
 
+    /**
+     * @return mixed
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
-
+    /**
+     * @param mixed $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
-
+    /**
+     * @param mixed $description
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getManufacturerId()
     {
         return $this->manufacturerId;
     }
 
-
+    /**
+     * @param mixed $manufacturerId
+     */
     public function setManufacturerId($manufacturerId)
     {
         $this->manufacturerId = $manufacturerId;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getModelId()
     {
         return $this->modelId;
     }
 
-
+    /**
+     * @param mixed $modelId
+     */
     public function setModelId($modelId)
     {
         $this->modelId = $modelId;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getPrice()
     {
         return $this->price;
     }
 
-
+    /**
+     * @param mixed $price
+     */
     public function setPrice($price)
     {
         $this->price = $price;
     }
 
+    /**
+     * @return mixed
+     */
     public function getYear()
     {
         return $this->year;
     }
 
-
+    /**
+     * @param mixed $year
+     */
     public function setYear($year)
     {
         $this->year = $year;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getTypeId()
     {
         return $this->typeId;
     }
 
-
+    /**
+     * @param mixed $typeId
+     */
     public function setTypeId($typeId)
     {
         $this->typeId = $typeId;
     }
 
-    public function setImage($image)
+    /**
+     * @return mixed
+     */
+    public function getUserId()
     {
-        $this->image = $image;
+        return $this->userId;
+    }
+
+    /**
+     * @param mixed $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
     }
 
     public function getImage()
@@ -125,61 +167,35 @@ class Ad
         return $this->image;
     }
 
-    public function getUserId()
+    public function setImage($image)
     {
-        return $this->userId;
+        $this->image = $image;
     }
 
-    public function setUserId($userId)
+    public function isActive()
     {
-        $this->userId = $userId;
+        return $this->active;
     }
 
-    public function save()
+    public function setActive($active)
     {
-        if (isset($this->id)) {
-            $this->update();
-        } else {
-            $this->create();
-        }
+        $this->active = $active;
     }
 
-    public function update()
+    protected function assignData()
     {
-        $db = new DBHelper();
-        $data = [
+        $this->data = [
             'title' => $this->title,
             'description' => $this->description,
             'manufacturer_id' => $this->manufacturerId,
             'model_id' => $this->modelId,
             'price' => $this->price,
-            'years' => $this->year,
+            'year' => $this->year,
             'type_id' => $this->typeId,
             'user_id' => $this->userId,
-            'image' => $this->image,
         ];
-
-        $db->update('ads', $data)->where('id', $this->id)->exec();
-        echo 'Sucessfully updated Ad';
     }
 
-    public function create()
-    {
-        $db = new DBHelper();
-        $data = [
-            'title' => $this->title,
-            'description' => $this->description,
-            'manufacturer_id' => $this->manufacturerId,
-            'model_id' => $this->modelId,
-            'price' => $this->price,
-            'years' => $this->year,
-            'type_id' => $this->typeId,
-            'user_id' => $this->userId,
-            'image' => $this->image,
-        ];
-        $db->insert('ads', $data)->exec();
-        echo 'Sucessfully created Ad';
-    }
 
     public function load($id)
     {
@@ -189,13 +205,27 @@ class Ad
             $this->id = $ad['id'];
             $this->title = $ad['title'];
             $this->manufacturerId = $ad['manufacturer_id'];
+            $this->description = $ad['description'];
             $this->modelId = $ad['model_id'];
             $this->price = $ad['price'];
-            $this->year = $ad['years'];
+            $this->year = $ad['year'];
             $this->typeId = $ad['type_id'];
             $this->userId = $ad['user_id'];
         }
 
         return $this;
+    }
+
+    public static function getAllAds()
+    {
+        $db = new DBHelper();
+        $data = $db->select()->from('ads')->where('active', 1)->get();
+        $ads = [];
+        foreach ($data as $element) {
+            $ad = new Ad();
+            $ad->load($element['id']);
+            $ads[] = $ad;
+        }
+        return $ads;
     }
 }

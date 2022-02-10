@@ -13,15 +13,14 @@ class Catalog extends AbstractController
     public function show($id)
     {
         $ad = new Ad();
-        $ad->load($id);
+        $this->data['ad'] = $ad->load($id);
+        $this->render('catalog/single');
     }
 
     public function all()
     {
-        for ($i = 0; $i < 10; $i++) {
-            echo '<a href="http://127.0.0.1:8000/index.php/catalog/show/' . $i . '">Read more</a>';
-            echo '<br>';
-        }
+        $this->data['ads'] = Ad::getAllAds();
+        $this->render('catalog/all');
     }
 
     public function add()
@@ -44,7 +43,6 @@ class Catalog extends AbstractController
             'type' => 'number',
             'placeholder' => 'Kaina'
         ]);
-
         $options = [];
 
         for ($i = 1970; $i <= date('Y'); $i++) {
@@ -53,13 +51,13 @@ class Catalog extends AbstractController
 
         $form->select([
             'name' => 'years',
-            'options' => $options
+            'options' => $options,
         ]);
 
         $form->input([
             'name' => 'image',
             'type' => 'text',
-            'placeholder' => 'image_URL'
+            'placeholder' => 'image'
         ]);
 
         $form->input([
@@ -86,6 +84,7 @@ class Catalog extends AbstractController
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
         $ad->setImage($_POST['image']);
+        $ad->setActive('1');
         $ad->save();
 
         Url::redirect('');
@@ -102,6 +101,7 @@ class Catalog extends AbstractController
         $ad->setModelId(1);
         $ad->setPrice($_POST['price']);
         $ad->setYear($_POST['years']);
+        $ad->setImage($_POST['image']);
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
         $ad->save();
@@ -127,12 +127,6 @@ class Catalog extends AbstractController
             'value' => $ad->getTitle()
         ]);
 
-        $form->input([
-            'name' => 'id',
-            'type' => 'hiden',
-            'value' => $ad->getId()
-        ]);
-
         $form->textArea('description', $ad->getDescription());
         $form->input([
             'name' => 'price',
@@ -140,7 +134,6 @@ class Catalog extends AbstractController
             'placeholder' => 'Kaina',
             'value' => $ad->getPrice()
         ]);
-
         $options = [];
 
         for ($i = 1970; $i <= date('Y'); $i++) {
@@ -149,14 +142,14 @@ class Catalog extends AbstractController
 
         $form->select([
             'name' => 'years',
-            'options' => $options
-
+            'options' => $options,
         ]);
-        // delete if fail
+
         $form->input([
             'name' => 'image',
             'type' => 'text',
-            'placeholder' => 'image_URL'
+            'placeholder' => 'image_URL',
+            'value' => $ad->getImage()
         ]);
 
         $form->input([
