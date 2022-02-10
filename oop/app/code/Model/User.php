@@ -27,7 +27,7 @@ class User extends AbstractModel
 
     public function __construct()
     {
-        $this->table = 'user';
+        $this->table = 'users';
     }
 
     public function assignData()
@@ -38,6 +38,7 @@ class User extends AbstractModel
             'email' => $this->email,
             'password' => $this->password,
             'phone' => $this->phone,
+            'active' => $this->active,
             'city_id' => $this->cityId
         ];
     }
@@ -138,15 +139,6 @@ class User extends AbstractModel
         return $this;
     }
 
-
-
-
-    public static function emailUnic($email)
-    {
-        $db = new DBHelper();
-        $rez = $db->select()->from('users')->where('email', $email)->get();
-        return empty($rez);
-    }
 
     public static function checkLoginCredentionals($email, $pass)
     {
