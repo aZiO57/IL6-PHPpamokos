@@ -230,6 +230,7 @@ class User extends AbstractController
     public function logout()
     {
         session_destroy();
+        Url::redirect('user/login');
     }
 
     public function all()
