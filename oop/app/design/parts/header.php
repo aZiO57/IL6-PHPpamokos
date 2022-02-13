@@ -13,11 +13,11 @@
                     <a href="<?php echo BASE_URL ?>">Home Page</a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL ?>/catalog/all">All ads</a>
+                    <a href="<?php echo BASE_URL ?>/catalog/all">View all ads</a>
                 </li>
                 <?php if ($this->isUserLoged()) : ?>
                     <li>
-                        <a href="<?php echo BASE_URL ?>/catalog/add">Add New</a>
+                        <a href="<?php echo BASE_URL ?>/catalog/add">Create new add</a>
                     </li>
                     <li>
                         <a href="<?php echo BASE_URL ?>/user/logout">Logout</a>
@@ -29,6 +29,7 @@
                     <li>
                         <a href="<?php echo BASE_URL ?>/user/register">Sign Up</a>
                     </li>
+
                 <?php endif; ?>
             </ul>
         </nav>

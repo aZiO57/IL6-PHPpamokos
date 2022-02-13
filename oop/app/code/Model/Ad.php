@@ -190,7 +190,7 @@ class Ad extends AbstractModel
             'manufacturer_id' => $this->manufacturerId,
             'model_id' => $this->modelId,
             'price' => $this->price,
-            'year' => $this->year,
+            'years' => $this->year,
             'type_id' => $this->typeId,
             'user_id' => $this->userId,
         ];
@@ -208,7 +208,7 @@ class Ad extends AbstractModel
             $this->description = $ad['description'];
             $this->modelId = $ad['model_id'];
             $this->price = $ad['price'];
-            $this->year = $ad['year'];
+            $this->year = $ad['years'];
             $this->typeId = $ad['type_id'];
             $this->userId = $ad['user_id'];
         }

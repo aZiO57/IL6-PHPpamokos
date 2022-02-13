@@ -1,5 +1,5 @@
 <footer>
-    All rights 2022...
+    ® All rights might some day be reserved 2022...
 </footer>
 </body>
 
