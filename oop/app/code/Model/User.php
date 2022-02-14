@@ -121,8 +121,6 @@ class User extends AbstractModel
     }
 
 
-
-
     public function load($id)
     {
         $db = new DBHelper();

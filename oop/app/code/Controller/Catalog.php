@@ -8,6 +8,7 @@ use Model\User as UserModel;
 use Helper\Url;
 use Model\Ad;
 
+
 class Catalog extends AbstractController
 {
     public function show($id)
@@ -65,8 +66,8 @@ class Catalog extends AbstractController
             'type' => 'submit',
             'value' => 'Sukurti skelbima'
         ]);
-
-        echo $form->getForm();
+        $this->data['form'] = $form->getForm();
+        $this->render('catalog/create');
     }
 
     public function create()
