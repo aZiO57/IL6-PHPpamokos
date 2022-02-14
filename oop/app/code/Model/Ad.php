@@ -28,6 +28,8 @@ class Ad extends AbstractModel
 
     private $active;
 
+    private $slug;
+
     public function __construct()
     {
         $this->table = 'ads';
@@ -182,6 +184,18 @@ class Ad extends AbstractModel
         $this->active = $active;
     }
 
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+
+
     protected function assignData()
     {
         $this->data = [
@@ -193,6 +207,9 @@ class Ad extends AbstractModel
             'years' => $this->year,
             'type_id' => $this->typeId,
             'user_id' => $this->userId,
+            'image' => $this->image,
+            'active' => $this->active,
+            'slug' => $this->slug
         ];
     }
 
@@ -211,6 +228,9 @@ class Ad extends AbstractModel
             $this->year = $ad['years'];
             $this->typeId = $ad['type_id'];
             $this->userId = $ad['user_id'];
+            $this->setImage = $ad['image'];
+            $this->active = $ad['active'];
+            $this->slug = $ad['slug'];
         }
 
         return $this;
@@ -227,5 +247,17 @@ class Ad extends AbstractModel
             $ads[] = $ad;
         }
         return $ads;
+    }
+
+    public function loadBySlug($slug)
+    {
+        $db = new DBHelper();
+        $rez = $db->select()->from($this->table)->where('slug', $slug)->getOne();
+        if (!empty($rez)) {
+            $this->load($rez['id']);
+            return $this;
+        } else {
+            return false;
+        }
     }
 }

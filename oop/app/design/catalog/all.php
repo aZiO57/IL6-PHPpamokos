@@ -11,5 +11,6 @@
                 </div>
             </a>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach; //set image aprasyti ~5 eilutej
+    ?>
 </div>
