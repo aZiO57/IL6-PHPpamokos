@@ -30,135 +30,89 @@ class Ad extends AbstractModel
 
     private $slug;
 
+    private $vin;
+
     public function __construct()
     {
         $this->table = 'ads';
     }
 
-
-    /**
-     * @return mixed
-     */
     public function getTitle()
     {
         return $this->title;
     }
 
-    /**
-     * @param mixed $title
-     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * @param mixed $description
-     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    /**
-     * @return mixed
-     */
     public function getManufacturerId()
     {
         return $this->manufacturerId;
     }
 
-    /**
-     * @param mixed $manufacturerId
-     */
     public function setManufacturerId($manufacturerId)
     {
         $this->manufacturerId = $manufacturerId;
     }
 
-    /**
-     * @return mixed
-     */
     public function getModelId()
     {
         return $this->modelId;
     }
 
-    /**
-     * @param mixed $modelId
-     */
     public function setModelId($modelId)
     {
         $this->modelId = $modelId;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPrice()
     {
         return $this->price;
     }
 
-    /**
-     * @param mixed $price
-     */
     public function setPrice($price)
     {
         $this->price = $price;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getYear()
     {
         return $this->year;
     }
 
-    /**
-     * @param mixed $year
-     */
     public function setYear($year)
     {
         $this->year = $year;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTypeId()
     {
         return $this->typeId;
     }
 
-    /**
-     * @param mixed $typeId
-     */
     public function setTypeId($typeId)
     {
         $this->typeId = $typeId;
     }
 
-    /**
-     * @return mixed
-     */
     public function getUserId()
     {
         return $this->userId;
     }
 
-    /**
-     * @param mixed $userId
-     */
     public function setUserId($userId)
     {
         $this->userId = $userId;
@@ -194,7 +148,15 @@ class Ad extends AbstractModel
         $this->slug = $slug;
     }
 
+    public function getVin()
+    {
+        return $this->vin;
+    }
 
+    public function setVin($vin)
+    {
+        $this->vin = $vin;
+    }
 
     protected function assignData()
     {
@@ -209,10 +171,10 @@ class Ad extends AbstractModel
             'user_id' => $this->userId,
             'image' => $this->image,
             'active' => $this->active,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'vin' => $this->vin
         ];
     }
-
 
     public function load($id)
     {
@@ -231,6 +193,7 @@ class Ad extends AbstractModel
             $this->setImage = $ad['image'];
             $this->active = $ad['active'];
             $this->slug = $ad['slug'];
+            $this->vin = $ad['vin'];
         }
 
         return $this;

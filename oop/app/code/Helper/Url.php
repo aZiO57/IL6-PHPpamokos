@@ -25,4 +25,11 @@ class Url
         $string = str_replace(' ', '-', $string);
         return $string;
     }
+
+
+    public static function vin($string)
+    {
+        $string = strtoupper($string);
+        return $string;
+    }
 }

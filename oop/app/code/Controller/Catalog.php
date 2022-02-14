@@ -66,6 +66,12 @@ class Catalog extends AbstractController
         ]);
 
         $form->input([
+            'name' => 'vin',
+            'type' => 'text',
+            'placeholder' => 'VIN code'
+        ]);
+
+        $form->input([
             'name' => 'createAd',
             'type' => 'submit',
             'value' => 'Sukurti skelbima'
@@ -83,6 +89,9 @@ class Catalog extends AbstractController
         while (!Ad::isValueUnic('slug', $slug, 'ads')) {
             $slug = $slug . rand(0, 100);
         }
+        $vin = Url::vin($_POST['vin']);
+        while (!Ad::isValueUnic('vin', $vin, 'ads')) {
+        }
         $ad = new Ad();
         $ad->setTitle($_POST['title']);
         $ad->setDescription($_POST['description']);
@@ -95,6 +104,7 @@ class Catalog extends AbstractController
         $ad->setImage($_POST['image']);
         $ad->setActive('1');
         $ad->setSlug($slug);
+        $ad->setVin($_POST['vin']);
         $ad->save();
 
         Url::redirect('');
@@ -118,6 +128,7 @@ class Catalog extends AbstractController
         $ad->setImage($_POST['image']);
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
+        $ad->setVin($_POST['vin']);
         $ad->save();
     }
 
@@ -164,6 +175,13 @@ class Catalog extends AbstractController
             'type' => 'text',
             'placeholder' => 'image_URL',
             'value' => $ad->getImage()
+        ]);
+
+        $form->input([
+            'name' => 'VIN',
+            'type' => 'text',
+            'placeholder' => 'VIN code',
+            'value' => $ad->getVin()
         ]);
 
         $form->input([

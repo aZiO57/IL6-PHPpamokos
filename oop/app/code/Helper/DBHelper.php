@@ -57,19 +57,18 @@ class DBHelper
 
     public function get()
     {
-        $rez = $this->conn->query($this->sql);
+        $rez = $this->exec();
         return $rez->fetchAll();
     }
 
     public function exec()
     {
-        $this->conn->query($this->sql);
+        return $this->conn->query($this->sql);
     }
-
 
     public function getOne()
     {
-        $rez = $this->conn->query($this->sql);
+        $rez = $this->exec();
         $data = $rez->fetchAll();
         if (!empty($data)) {
             return $data[0];
@@ -78,9 +77,6 @@ class DBHelper
         }
     }
 
-    // name => Deividas,
-    // last_name => Kravčenko
-    // name,last_name,email
     public function insert($table, $data)
     {
         $this->sql .= 'INSERT INTO ' . $table .
@@ -89,18 +85,13 @@ class DBHelper
         return $this;
     }
 
-
     public function update($table, $data)
     {
         $this->sql .= 'UPDATE ' . $table . ' SET ';
-        // UPDATE users SET ;
         $values = [];
         foreach ($data as $column => $value) {
             $values[] = "$column = '$value'";
-            // name = 'Deividas'
-            // last_name = 'Kravčenko'
         }
-        // UPDATE users SET name = 'Deividas', last_name = 'Kravčenko'
         $this->sql .= implode(',', $values);
         return $this;
     }
