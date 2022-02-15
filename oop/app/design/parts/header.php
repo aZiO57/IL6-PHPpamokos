@@ -7,29 +7,31 @@
 
 <body>
     <header>
+        <div class="sliding-part">
+            Autoshop 10% nuolaida su kodu "Kibiras".
+        </div>
         <nav>
             <ul>
                 <li>
-                    <a href="<?php echo BASE_URL ?>">Home Page</a>
+                    <a href="<?php echo $this->url(''); ?>">Home Page</a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL ?>/catalog/all">View all ads</a>
+                    <a href="<?php echo $this->url('catalog/all') ?>">All ads</a>
                 </li>
                 <?php if ($this->isUserLoged()) : ?>
                     <li>
-                        <a href="<?php echo BASE_URL ?>/catalog/add">Create new add</a>
+                        <a href="<?php echo $this->url('catalog/add') ?>">Add New</a>
                     </li>
                     <li>
-                        <a href="<?php echo BASE_URL ?>/user/logout">Logout</a>
+                        <a href="<?php echo $this->url('user/logout') ?>">Logout</a>
                     </li>
                 <?php else : ?>
                     <li>
-                        <a href="<?php echo BASE_URL ?>/user/login">Login</a>
+                        <a href="<?php echo $this->url('user/login') ?>">Login</a>
                     </li>
                     <li>
-                        <a href="<?php echo BASE_URL ?>/user/register">Sign Up</a>
+                        <a href="<?php echo $this->url('user/register') ?>">Sign Up</a>
                     </li>
-
                 <?php endif; ?>
             </ul>
         </nav>
