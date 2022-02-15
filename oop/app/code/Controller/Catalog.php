@@ -178,7 +178,7 @@ class Catalog extends AbstractController
         ]);
 
         $form->input([
-            'name' => 'VIN',
+            'name' => 'vin',
             'type' => 'text',
             'placeholder' => 'VIN code',
             'value' => $ad->getVin()

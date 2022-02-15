@@ -2,6 +2,8 @@
 
 namespace Helper;
 
+use Helper\Logger;
+
 class DBHelper
 {
     private $conn;
@@ -11,12 +13,12 @@ class DBHelper
     public function __construct()
     {
         $this->sql = '';
+
         try {
             $this->conn = new \PDO("mysql:host=" . SERVERNAME . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            // echo "Connected successfully";
         } catch (\PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            Logger::log("Connection failed: " . $e->getMessage());
         }
     }
 
@@ -63,6 +65,9 @@ class DBHelper
 
     public function exec()
     {
+        if (DEBUG_MODE) {
+            Logger::log($this->sql);
+        }
         return $this->conn->query($this->sql);
     }
 

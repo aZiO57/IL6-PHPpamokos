@@ -1,0 +1,7 @@
+Connection failed: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
+SELECT * FROM ads  WHERE slug="toyota-su-vin-kodu"
+SELECT * FROM ads  WHERE id="25"
+2022/02/15 07-18-36SELECT * FROM ads  WHERE slug="toyota-su-vin-kodu"
+2022/02/15 07-18-36SELECT * FROM ads  WHERE id="25"
+2022/02/15 07-19-08SELECT * FROM ads  WHERE slug="toyota-su-vin-kodu"
+2022/02/15 07-19-08SELECT * FROM ads  WHERE id="25"
