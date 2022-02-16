@@ -32,6 +32,8 @@ class Ad extends AbstractModel
 
     private $vin;
 
+    private $views;
+
     public function __construct()
     {
         $this->table = 'ads';
@@ -87,6 +89,15 @@ class Ad extends AbstractModel
         $this->price = $price;
     }
 
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+    public function setViews($views)
+    {
+        $this->views = $views;
+    }
 
     public function getYear()
     {
@@ -172,7 +183,8 @@ class Ad extends AbstractModel
             'image' => $this->image,
             'active' => $this->active,
             'slug' => $this->slug,
-            'vin' => $this->vin
+            'vin' => $this->vin,
+            'views' => $this->views
         ];
     }
 
@@ -194,6 +206,7 @@ class Ad extends AbstractModel
             $this->active = $ad['active'];
             $this->slug = $ad['slug'];
             $this->vin = $ad['vin'];
+            $this->views = $ad['views'];
         }
 
         return $this;
@@ -210,6 +223,41 @@ class Ad extends AbstractModel
             $ads[] = $ad;
         }
         return $ads;
+    }
+
+    public static function getRecentAds()
+    {
+        $db = new DBHelper();
+        $data = $db->select()->from('ads')->where('active', 1)->orderBy('id', 'DESC')->limit(5)->get();
+        $ads = [];
+        foreach ($data as $element) {
+            $ad = new Ad();
+            $ad->load($element['id']);
+            $ads[] = $ad;
+        }
+        return $ads;
+    }
+
+    public static function getPopularAds()
+    {
+        $db = new DBHelper();
+        $data = $db->select()->from('ads')->where('active', 1)->orderBy('views', 'DESC')->limit(5)->get();
+        $ads = [];
+        foreach ($data as $element) {
+            $ad = new Ad();
+            $ad->load($element['id']);
+            $ads[] = $ad;
+        }
+        return $ads;
+    }
+
+    public function addView($id)
+    {
+        //     $db = new DBHelper();
+        //     $data = $db->select()->from('ads')->where('id', $id)->getOne();
+        $views = $this->getViews();
+        $this->setViews($views + 1);
+        $this->save();
     }
 
     public function loadBySlug($slug)

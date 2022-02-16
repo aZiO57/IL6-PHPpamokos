@@ -16,6 +16,7 @@ class Catalog extends AbstractController
         $ad = new Ad();
         $this->data['ad'] = $ad->loadBySlug($slug);
         if ($this->data['ad']) {
+            $ad->addView($this->data['ad']->getId());
             $this->render('catalog/single');
         } else {
             echo '404';
@@ -114,6 +115,8 @@ class Catalog extends AbstractController
     {
     }
 
+    //update neveikia, o sukuria nauja skelbima
+
     public function update()
     {
         $adId = $_POST['id'];
@@ -130,6 +133,8 @@ class Catalog extends AbstractController
         $ad->setUserId($_SESSION['user_id']);
         $ad->setVin($_POST['vin']);
         $ad->save();
+
+        Url::redirect('/catalog/show/' . $ad->getSlug());
     }
 
     public function edit($id)
@@ -150,7 +155,6 @@ class Catalog extends AbstractController
             'placeholder' => 'Pavadinimas',
             'value' => $ad->getTitle()
         ]);
-
         $form->textArea('description', $ad->getDescription());
         $form->input([
             'name' => 'price',
@@ -167,6 +171,12 @@ class Catalog extends AbstractController
         $form->select([
             'name' => 'years',
             'options' => $options,
+        ]);
+
+        $form->input([
+            'name' => 'id',
+            'type' => 'hidden',
+            'value' => $ad->getId(),
         ]);
 
         $form->input([

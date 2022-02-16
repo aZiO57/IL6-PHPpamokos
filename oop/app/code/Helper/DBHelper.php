@@ -50,6 +50,11 @@ class DBHelper
         $this->sql .= ' OR ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
+    public function orderBy($field, $type)
+    {
+        $this->sql .= ' ORDER BY ' . $field . ' ' . $type;
+        return $this;
+    }
 
     public function delete()
     {
@@ -103,6 +108,7 @@ class DBHelper
 
     public function limit($number)
     {
-        $this->slq .= ' LIMIT ' . $number;
+        $this->sql .= ' LIMIT ' . $number;
+        return $this;
     }
 }

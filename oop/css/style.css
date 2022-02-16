@@ -64,9 +64,14 @@ header .sliding-part{
     font-size: 20px;
     font-style: italic;
 }
-
+.box{
+    border:2px #000 solid;
+    width: 200px;
+    margin:5px;
+    
+}
 .box img{
-    width: 385px;
+    width: 200px;
 }
 
 a .edit-ad {
@@ -77,4 +82,10 @@ a .edit-ad {
     padding: 5px 4px;
     background-color: azure;
     text-decoration: none;
+}
+.box_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    
 }
