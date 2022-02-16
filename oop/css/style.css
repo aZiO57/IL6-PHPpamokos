@@ -57,3 +57,24 @@ header .sliding-part{
     height: 30px;
     line-height: 30px;
 }
+
+.post-content .years{
+    color: #301ce2;
+    font-weight: 800;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.box img{
+    width: 385px;
+}
+
+a .edit-ad {
+    text-decoration: none;
+    color: rgb(228, 96, 8);
+    border: 1px black solid;
+    display: inline;
+    padding: 5px 4px;
+    background-color: azure;
+    text-decoration: none;
+}

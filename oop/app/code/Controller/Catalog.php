@@ -98,7 +98,7 @@ class Catalog extends AbstractController
         $ad->setManufacturerId(1);
         $ad->setModelId(1);
         $ad->setPrice($_POST['price']);
-        $ad->setYear($_POST['year']);
+        $ad->setYear($_POST['years']);
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
         $ad->setImage($_POST['image']);
@@ -143,7 +143,6 @@ class Catalog extends AbstractController
         if ($_SESSION['user_id'] != $ad->getUserId()) {
             Url::redirect('');
         }
-
         $form = new FormHelper('catalog/update', 'POST');
         $form->input([
             'name' => 'title',

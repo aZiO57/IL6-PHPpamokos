@@ -1,17 +1,20 @@
 <div class="wrapper">
     <?php foreach ($this->data['ads'] as $ad) : ?>
         <div class="box">
-            <a href="<?php echo BASE_URL . 'catalog/show/' . $ad->getSlug() ?>">
-                <img src="<?php echo $ad->getImage() ?>">
+            <a href="<?= BASE_URL . 'catalog/show/' . $ad->getSlug() ?>">
+                <img src="<?= $ad->getImage() ?>">
                 <div class="title">
-                    <?php echo $ad->getTitle() ?>
+                    <?= $ad->getTitle() ?>
                 </div>
                 <div class="price">
-                    <?php echo $ad->getPrice() ?>
+                    <?= $ad->getPrice() ?>
+                </div>
+                <div class="years">
+                    <?= $ad->getYear() ?>
                 </div>
             </a>
         </div>
-    <?php endforeach; //set image aprasyti ~5 eilutej
+    <?php endforeach
     ?>
 </div>
 

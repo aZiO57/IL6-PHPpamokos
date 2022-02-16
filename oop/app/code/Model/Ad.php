@@ -190,7 +190,7 @@ class Ad extends AbstractModel
             $this->year = $ad['years'];
             $this->typeId = $ad['type_id'];
             $this->userId = $ad['user_id'];
-            $this->setImage = $ad['image'];
+            $this->image = $ad['image'];
             $this->active = $ad['active'];
             $this->slug = $ad['slug'];
             $this->vin = $ad['vin'];
