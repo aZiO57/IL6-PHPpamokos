@@ -11,6 +11,8 @@ class AbstractController
     public function __construct()
     {
         $this->data = [];
+        $this->data['title'] = 'Autominusas.lt';
+        $this->data['meta_description'] = '';
     }
 
     protected function render($template)

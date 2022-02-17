@@ -1,7 +1,8 @@
 <html>
 
 <head>
-    <title>Autominusas</title>
+    <title><?= $this->data['title'] ?> </title>
+    <meta name="description" content="<?= $this->data['meta_description'] ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL_WITHOUT_INDEX_PHP . 'css/style.css'; ?>">
 </head>
 
@@ -16,7 +17,7 @@
                     <a href="<?= $this->url(''); ?>">Home Page</a>
                 </li>
                 <li>
-                    <a href="<?= $this->url('catalog/all') ?>">All ads</a>
+                    <a href="<?= $this->url('catalog') ?>">All ads</a>
                 </li>
                 <?php if ($this->isUserLoged()) : ?>
                     <li>

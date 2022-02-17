@@ -13,6 +13,12 @@ use Core\AbstractController;
 
 class User extends AbstractController
 {
+    public function index()
+    {
+        $this->data['users'] = UserModel::getAllUsers();
+        $this->render('user/list');
+    }
+
     public function show($id)
     {
         echo 'User controller ID: ' . $id;
@@ -231,11 +237,5 @@ class User extends AbstractController
     {
         session_destroy();
         Url::redirect('user/login');
-    }
-
-    public function all()
-    {
-        $this->data['users'] = UserModel::getAllUsers();
-        $this->render('user/list');
     }
 }

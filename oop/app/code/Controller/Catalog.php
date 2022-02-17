@@ -11,23 +11,27 @@ use Model\Ad;
 
 class Catalog extends AbstractController
 {
-    public function show($slug)
-    {
-        $ad = new Ad();
-        $this->data['ad'] = $ad->loadBySlug($slug);
-        if ($this->data['ad']) {
-            $ad->addView($this->data['ad']->getId());
-            $this->render('catalog/single');
-        } else {
-            echo '404';
-        }
-    }
 
-    public function all()
+    public function index()
     {
         $this->data['ads'] = Ad::getAllAds();
         $this->render('catalog/all');
     }
+
+    public function show($slug)
+    {
+        $ad = new Ad();
+        $this->data['ad'] = $ad->loadBySlug($slug);
+        $this->data['title'] = $ad->getTitle();
+        $this->data['meta_description'] = $ad->getTitle();
+        if ($this->data['ad']) {
+            $ad->addView($this->data['ad']->getId());
+            $this->render('catalog/single');
+        } else {
+            $this->render('parts/errors/error404');
+        }
+    }
+
 
     public function add()
     {
