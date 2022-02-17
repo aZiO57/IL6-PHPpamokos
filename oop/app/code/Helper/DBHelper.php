@@ -45,11 +45,13 @@ class DBHelper
         $this->sql .= ' AND ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
+
     public function orWhere($field, $value, $operator = '=')
     {
         $this->sql .= ' OR ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
+
     public function orderBy($field, $type)
     {
         $this->sql .= ' ORDER BY ' . $field . ' ' . $type;

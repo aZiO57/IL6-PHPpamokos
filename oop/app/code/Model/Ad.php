@@ -228,7 +228,11 @@ class Ad extends AbstractModel
     public static function getRecentAds()
     {
         $db = new DBHelper();
-        $data = $db->select()->from('ads')->where('active', 1)->orderBy('id', 'DESC')->limit(5)->get();
+        $data = $db->select()
+            ->from('ads')
+            ->where('active', 1)
+            ->orderBy('id', 'DESC')
+            ->limit(5)->get();
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
@@ -241,7 +245,12 @@ class Ad extends AbstractModel
     public static function getPopularAds()
     {
         $db = new DBHelper();
-        $data = $db->select()->from('ads')->where('active', 1)->orderBy('views', 'DESC')->limit(5)->get();
+        $data = $db->select()
+            ->from('ads')
+            ->where('active', 1)
+            ->orderBy('views', 'DESC')
+            ->limit(5)
+            ->get();
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
@@ -253,8 +262,6 @@ class Ad extends AbstractModel
 
     public function addView($id)
     {
-        //     $db = new DBHelper();
-        //     $data = $db->select()->from('ads')->where('id', $id)->getOne();
         $views = $this->getViews();
         $this->setViews($views + 1);
         $this->save();

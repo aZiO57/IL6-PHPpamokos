@@ -73,7 +73,6 @@ header .sliding-part{
 .box img{
     width: 200px;
 }
-
 a .edit-ad {
     text-decoration: none;
     color: rgb(228, 96, 8);
@@ -87,5 +86,5 @@ a .edit-ad {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    
+
 }
