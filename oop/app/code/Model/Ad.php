@@ -225,6 +225,26 @@ class Ad extends AbstractModel
         return $ads;
     }
 
+    public static function getAds($page)
+    {
+        $db = new DBHelper();
+        $data = $db->select()->from('ads')->where('active', 1)->limit(5)->offset(($page - 1) * 5)->get();
+        $ads = [];
+        foreach ($data as $element) {
+            $ad = new Ad();
+            $ad->load($element['id']);
+            $ads[] = $ad;
+        }
+        return $ads;
+    }
+
+    public static function getAdsCount()
+    {
+        $db = new DBHelper();
+        $data = $db->select('COUNT(id)')->from('ads')->where('active', 1)->get();
+        return $data[0]['COUNT(id)'];
+    }
+
     public static function getRecentAds()
     {
         $db = new DBHelper();

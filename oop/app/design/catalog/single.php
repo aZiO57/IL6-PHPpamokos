@@ -7,16 +7,18 @@ $ad = $this->data['ad']; ?>
     <div class="post-content">
         <h1><?= $ad->getTitle(); ?></h1>
         <?php
-        if ($_SESSION['user_id'] === $ad->getUserId()) {
-            echo  "<a href='" . Url::link("catalog/edit", $ad->getId()) . "'><div class='edit-ad'>
+        if (!empty($_SESSION['user_id'])) {
+            if ($_SESSION['user_id'] === $ad->getUserId()) {
+                echo  "<a href='" . Url::link("catalog/edit", $ad->getId()) . "'><div class='edit-ad'>
             Redaguoti skelbima
         </div> </a>";
+            }
         } ?>
         <div class="image-wrapper">
             <img src="<?= $ad->getImage() ?>">
         </div>
         <div id="price" class="price">
-            <?= $ad->getPrice(); ?>
+            <?= $ad->getPrice(); ?> €
         </div>
         <div class="years">
             <?= $ad->getYear(); ?> metai

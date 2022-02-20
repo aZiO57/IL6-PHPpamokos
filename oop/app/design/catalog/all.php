@@ -14,6 +14,23 @@
                 </div>
             </a>
         </div>
-    <?php endforeach
-    ?>
+    <?php endforeach ?>
+</div>
+
+<div class="paginator">
+    <?php if ($this->data['currentPage'] > 1) : ?>
+        <div class="pageLink">
+            <a href="<?= BASE_URL . 'catalog?page=' . ($this->data['currentPage'] - 1) ?>"> Ankstesnis puslapis
+            </a>
+        </div>
+    <?php endif ?>
+    <div class="pageLink">
+        <&nbsp; <?= $this->data['currentPage'] ?> &nbsp;>
+    </div>
+    <?php if ($this->data['currentPage'] < ($this->data['pageCount'])) : ?>
+        <div class="pageLink">
+            <a href="<?= BASE_URL . 'catalog?page=' . ($this->data['currentPage'] + 1) ?>"> Kitas puslapis
+            </a>
+        </div>
+    <?php endif ?>
 </div>

@@ -14,7 +14,15 @@ class Catalog extends AbstractController
 
     public function index()
     {
-        $this->data['ads'] = Ad::getAllAds();
+        if (!empty($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+        $this->data['ads'] = Ad::getAds($page);
+        $adsCount = Ad::getAdsCount();
+        $this->data['pageCount'] = ceil($adsCount / 5);
+        $this->data['currentPage'] = $page;
         $this->render('catalog/all');
     }
 

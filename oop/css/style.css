@@ -1,5 +1,5 @@
 body{
-    background: #cccccc;
+    background: #929191;
 }
 
 nav ul{
@@ -87,4 +87,12 @@ a .edit-ad {
     flex-wrap: wrap;
     flex-direction: row;
 
+}
+.pageLink {
+    display: inline-block;
+    margin: 5px auto;
+}
+
+.paginator {
+    text-align: center;
 }
