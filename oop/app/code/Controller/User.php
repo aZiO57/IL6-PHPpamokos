@@ -203,10 +203,11 @@ class User extends AbstractController
             $user->setName($_POST['name']);
             $user->setLastName($_POST['last_name']);
             $user->setPhone($_POST['phone']);
-            $user->setActive(1);
             $user->setPassword(md5($_POST['password']));
             $user->setEmail($_POST['email']);
             $user->setCityId($_POST['city_id']);
+            $user->setActive(1);
+            $user->setRoleId(0);
             $user->save();
             Url::redirect('user/login');
         } else {

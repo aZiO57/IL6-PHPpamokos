@@ -25,6 +25,8 @@ class User extends AbstractModel
 
     private $active;
 
+    private $roleId;
+
     public function __construct()
     {
         $this->table = 'users';
@@ -39,7 +41,8 @@ class User extends AbstractModel
             'password' => $this->password,
             'phone' => $this->phone,
             'active' => $this->active,
-            'city_id' => $this->cityId
+            'city_id' => $this->cityId,
+            'role_id' => $this->roleId
         ];
     }
 
@@ -104,6 +107,15 @@ class User extends AbstractModel
         return $this->city;
     }
 
+    public function getRoleId()
+    {
+        return $this->roleId;
+    }
+
+    public function setRoleId($id)
+    {
+        $this->roleId = $id;
+    }
 
     public function setCityId($id)
     {
@@ -132,6 +144,7 @@ class User extends AbstractModel
         $this->email = $data['email'];
         $this->password = $data['password'];
         $this->cityId = $data['city_id'];
+        $this->roleId = $data['role_id'];
         $city = new City();
         $this->city = $city->load($this->cityId);
         return $this;
