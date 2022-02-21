@@ -20,7 +20,7 @@
 <div class="paginator">
     <?php if ($this->data['currentPage'] > 1) : ?>
         <div class="pageLink">
-            <a href="<?= BASE_URL . 'catalog?page=' . ($this->data['currentPage'] - 1) ?>"> Ankstesnis puslapis
+            <a href="<?= BASE_URL . 'catalog?page=' . ($this->data['currentPage'] - 1) ?>"> Previous page
             </a>
         </div>
     <?php endif ?>
@@ -29,7 +29,7 @@
     </div>
     <?php if ($this->data['currentPage'] < ($this->data['pageCount'])) : ?>
         <div class="pageLink">
-            <a href="<?= BASE_URL . 'catalog?page=' . ($this->data['currentPage'] + 1) ?>"> Kitas puslapis
+            <a href="<?= BASE_URL . 'catalog?page=' . ($this->data['currentPage'] + 1) ?>"> Next page
             </a>
         </div>
     <?php endif ?>

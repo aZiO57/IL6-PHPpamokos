@@ -114,9 +114,9 @@ class DBHelper
         return $this;
     }
 
-    public function offset($number)
+    public function offset($page)
     {
-        $this->sql .= ' OFFSET ' . $number;
+        $this->sql .= ' OFFSET ' . $page;
         return $this;
     }
 }
