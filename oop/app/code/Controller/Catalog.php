@@ -126,8 +126,6 @@ class Catalog extends AbstractController
     {
     }
 
-    //update neveikia, o sukuria nauja skelbima
-
     public function update()
     {
         $adId = $_POST['id'];
@@ -206,7 +204,7 @@ class Catalog extends AbstractController
 
         $form->input([
             'type' => 'submit',
-            'value' => 'sukurti',
+            'value' => 'atnaujinti',
             'name' => 'create'
         ]);
 
