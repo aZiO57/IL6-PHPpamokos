@@ -27,9 +27,13 @@ class User extends AbstractModel
 
     private $roleId;
 
-    public function __construct()
+    protected const TABLE = 'users';
+
+    public function __construct($id = null)
     {
-        $this->table = 'users';
+        if ($id !== null) {
+            $this->load($id);
+        }
     }
 
     public function assignData()
@@ -40,8 +44,8 @@ class User extends AbstractModel
             'email' => $this->email,
             'password' => $this->password,
             'phone' => $this->phone,
-            'active' => $this->active,
             'city_id' => $this->cityId,
+            'active' => $this->active,
             'role_id' => $this->roleId
         ];
     }
@@ -107,15 +111,6 @@ class User extends AbstractModel
         return $this->city;
     }
 
-    public function getRoleId()
-    {
-        return $this->roleId;
-    }
-
-    public function setRoleId($id)
-    {
-        $this->roleId = $id;
-    }
 
     public function setCityId($id)
     {
@@ -132,11 +127,21 @@ class User extends AbstractModel
         $this->active = $active;
     }
 
+    public function setRoleId($id)
+    {
+        $this->roleId = $id;
+    }
+
+    public function getRoleId()
+    {
+        return $this->roleId;
+    }
+
 
     public function load($id)
     {
         $db = new DBHelper();
-        $data = $db->select()->from('users')->where('id', $id)->getOne();
+        $data = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->lastName = $data['last_name'];
@@ -144,19 +149,19 @@ class User extends AbstractModel
         $this->email = $data['email'];
         $this->password = $data['password'];
         $this->cityId = $data['city_id'];
+        $this->active = $data['active'];
         $this->roleId = $data['role_id'];
         $city = new City();
         $this->city = $city->load($this->cityId);
         return $this;
     }
 
-
     public static function checkLoginCredentionals($email, $pass)
     {
         $db = new DBHelper();
         $rez = $db
             ->select('id')
-            ->from('users')
+            ->from(self::TABLE)
             ->where('email', $email)
             ->andWhere('password', $pass)
             ->andWhere('active', 1)
@@ -173,7 +178,7 @@ class User extends AbstractModel
     public static function getAllUsers()
     {
         $db = new DBHelper();
-        $data = $db->select('id')->from('users')->get();
+        $data = $db->select('id')->from(self::TABLE)->get();
         $users = [];
         foreach ($data as $element) {
             $user = new User();

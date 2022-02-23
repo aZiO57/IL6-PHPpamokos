@@ -7,6 +7,7 @@ use Core\AbstractModel;
 
 class Ad extends AbstractModel
 {
+    protected const TABLE = 'ads';
 
     private $title;
 
@@ -36,7 +37,6 @@ class Ad extends AbstractModel
 
     public function __construct($id = null)
     {
-        $this->table = 'ads';
         if ($id !== null) {
             $this->load($id);
         }
@@ -194,7 +194,7 @@ class Ad extends AbstractModel
     public function load($id)
     {
         $db = new DBHelper();
-        $ad = $db->select()->from('ads')->where('id', $id)->getOne();
+        $ad = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
         if (!empty($ad)) {
             $this->id = $ad['id'];
             $this->title = $ad['title'];
@@ -215,10 +215,17 @@ class Ad extends AbstractModel
         return $this;
     }
 
-    public static function getAllAds()
+    public static function getAllAds($page = null, $limit = null)
     {
         $db = new DBHelper();
-        $data = $db->select()->from('ads')->where('active', 1)->get();
+        $db->select()->from(self::TABLE)->where('active', 1);
+        if ($limit != null) {
+            $db->limit($limit);
+        }
+        if ($page != null) {
+            $db->offset($page);
+        }
+        $data = $db->get();
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
@@ -231,7 +238,7 @@ class Ad extends AbstractModel
     public static function getAds($page)
     {
         $db = new DBHelper();
-        $data = $db->select()->from('ads')->where('active', 1)->limit(5)->offset(($page - 1) * 5)->get();
+        $data = $db->select()->from(self::TABLE)->where('active', 1)->limit(5)->offset(($page - 1) * 5)->get();
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
@@ -244,7 +251,7 @@ class Ad extends AbstractModel
     public static function getAdsCount()
     {
         $db = new DBHelper();
-        $data = $db->select('COUNT(id)')->from('ads')->where('active', 1)->get();
+        $data = $db->select('COUNT(id)')->from(self::TABLE)->where('active', 1)->get();
         return $data[0]['COUNT(id)'];
     }
 
@@ -252,7 +259,7 @@ class Ad extends AbstractModel
     {
         $db = new DBHelper();
         $data = $db->select()
-            ->from('ads')
+            ->from(self::TABLE)
             ->where('active', 1)
             ->orderBy('id', 'DESC')
             ->limit(5)->get();
@@ -269,7 +276,7 @@ class Ad extends AbstractModel
     {
         $db = new DBHelper();
         $data = $db->select()
-            ->from('ads')
+            ->from(self::TABLE)
             ->where('active', 1)
             ->orderBy('views', 'DESC')
             ->limit(5)
@@ -293,7 +300,7 @@ class Ad extends AbstractModel
     public function loadBySlug($slug)
     {
         $db = new DBHelper();
-        $rez = $db->select()->from($this->table)->where('slug', $slug)->getOne();
+        $rez = $db->select()->from(self::TABLE)->where('slug', $slug)->getOne();
         if (!empty($rez)) {
             $this->load($rez['id']);
             return $this;

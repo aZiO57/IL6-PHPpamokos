@@ -16,6 +16,7 @@
     </tr>
     <?php foreach ($this->data['users'] as $user) : ?>
         <tr>
+            <td><input type="checkbox"></td>
             <td><?= $user->getId(); ?></td>
             <td><?= $user->getName(); ?></td>
             <td><?= $user->getLastName(); ?></td>

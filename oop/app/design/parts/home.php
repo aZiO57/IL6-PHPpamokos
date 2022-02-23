@@ -12,10 +12,10 @@
                     <?= $ad->getTitle() ?>
                 </div>
                 <div class="price">
-                    <?= $ad->getPrice() ?>
+                    <?= $ad->getPrice() ?> €
                 </div>
                 <div class="years">
-                    <?= $ad->getYear() ?>
+                    <?= $ad->getYear() ?> m.
                 </div>
             </a>
         </div>

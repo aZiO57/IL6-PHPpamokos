@@ -13,6 +13,12 @@ use Model\User as UserModel;
 
 class Admin extends AbstractController
 {
+    public const ACTIVE = 1;
+
+    public const NOT_ACTIVE = 0;
+
+    public const DELETE = 2;
+
     public function __construct()
     {
         parent::__construct();
@@ -208,5 +214,28 @@ class Admin extends AbstractController
         $ad->setActive($_POST['active']);
         $ad->save();
         Url::redirect('admin/ads');
+    }
+
+    public function massupdate()
+    {
+        $action = $_POST['action'];
+        $ids = $_POST['ad_id'];
+        if ($action == self::ACTIVE || self::NOT_ACTIVE) {
+            foreach ($ids as $id) {
+                $ad = new Ad($id);
+                $ad->setActive($action);
+                $ad->save();
+            }
+        } elseif ($action == self::DELETE) {
+            foreach ($ids as $id) {
+                $ad = new Ad($id);
+                $ad->delete();
+            }
+        }
+    }
+
+    public static function betkas()
+    {
+        echo 'bet ka';
     }
 }
