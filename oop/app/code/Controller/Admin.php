@@ -10,8 +10,9 @@ use Model\Ad;
 use Model\City;
 use Model\User;
 use Model\User as UserModel;
+use Core\Interfaces\ControllerInterface;
 
-class Admin extends AbstractController
+class Admin extends AbstractController implements ControllerInterface
 {
     public const ACTIVE = 1;
 
@@ -216,7 +217,7 @@ class Admin extends AbstractController
         Url::redirect('admin/ads');
     }
 
-    public function massupdate()
+    public function massadsupdate()
     {
         $action = $_POST['action'];
         $ids = $_POST['ad_id'];
@@ -232,10 +233,5 @@ class Admin extends AbstractController
                 $ad->delete();
             }
         }
-    }
-
-    public static function betkas()
-    {
-        echo 'bet ka';
     }
 }
