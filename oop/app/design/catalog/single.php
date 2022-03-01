@@ -28,5 +28,9 @@ $ad = $this->data['ad']; ?>
                 <?= $ad->getDescription(); ?>
             </p>
         </div>
+        <div class="comments-wrapper">
+
+            <?= $this->data['comment_form'] ?>
+        </div>
     </div>
 </div>

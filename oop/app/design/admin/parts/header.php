@@ -3,7 +3,7 @@
 <head>
     <title><?= $this->data['title'] ?></title>
     <meta name="description" content="<?= $this->data['meta_description'] ?>">
-    <link rel="stylesheet" href="<?php echo BASE_URL_WITHOUT_INDEX_PHP . 'css/admin.css'; ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL_WITHOUT_INDEX_PHP . '/pub/css/admin.css'; ?>">
 </head>
 
 <body>

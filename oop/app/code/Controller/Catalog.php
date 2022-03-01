@@ -30,6 +30,20 @@ class Catalog extends AbstractController implements ControllerInterface
     {
         $ad = new Ad();
         $this->data['ad'] = $ad->loadBySlug($slug);
+
+        $form = new FormHelper('catalog/commentsave', 'POST');
+        $form->input([
+            'type' => 'hidden',
+            'name' => 'ad_id',
+            'value' => $ad->getId()
+        ]);
+        $form->textArea('comment', 'komentaras');
+        $form->input([
+            'type' => 'submit',
+            'name' => 'ok',
+            'value' => 'Komentuok atsakingai'
+        ]);
+        $this->data['comment_form'] = $form->getForm();
         $this->data['title'] = $ad->getTitle();
         $this->data['meta_description'] = $ad->getTitle();
         if ($this->data['ad']) {
