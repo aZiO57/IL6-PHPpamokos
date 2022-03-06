@@ -29,8 +29,24 @@ $ad = $this->data['ad']; ?>
             </p>
         </div>
         <div class="comments-wrapper">
-
-            <?= $this->data['comment_form'] ?>
+            <p>
+                <?= $this->data['comment_form'] ?>
+            </p>
+            <?php foreach ($this->data['comments'] ?? [] as $comment) : ?>
+                <div class="comment">
+                    <div class="comment_user">
+                        <?php $author = $comment->getUser() ?>
+                        <?= $author->getName() ?>
+                        <?= $author->getLastName() ?>
+                    </div>
+                    <div class="comment_date">
+                        <?= $comment->getDate() ?>
+                    </div>
+                    <div class="comment_content">
+                        <p><?= $comment->getMessage() ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

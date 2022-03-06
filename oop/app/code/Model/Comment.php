@@ -8,15 +8,16 @@ use Helper\DBHelper;
 
 class Comment extends AbstractModel implements ModelInterface
 {
-    private $userId;
+    protected const TABLE = 'comment';
 
-    private $adId;
+    private $user_id;
+
+    private $ad_id;
 
     private $date;
 
     private $message;
 
-    private $active;
 
 
     public function load($id)
@@ -25,11 +26,10 @@ class Comment extends AbstractModel implements ModelInterface
         $comment = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
         if (!empty($comment)) {
             $this->id = $comment['id'];
-            $this->userId = $comment['user_id'];
+            $this->user_id = $comment['user_id'];
             $this->adId = $comment['ad_id'];
             $this->message = $comment['message'];
             $this->date = $comment['date'];
-            $this->active = $comment['active'];
         }
 
         return $this;
@@ -38,15 +38,12 @@ class Comment extends AbstractModel implements ModelInterface
     public function assignData()
     {
         $this->data = [
-            'id' => $this->id,
-            'user_id' => $this->userId,
-            'ad_id' => $this->adId,
-            'date' => $this->date,
-            'mesage' => $this->message,
-            'active' => $this->active,
+            'user_id' => $this->user_id,
+            'ad_id' => $this->ad_id,
+            'message' => $this->message,
+            // 'date' => $this->date
         ];
     }
-
 
     public function getId()
     {
@@ -55,22 +52,26 @@ class Comment extends AbstractModel implements ModelInterface
 
     public function getUserId()
     {
-        return $this->userId;
+        return $this->user_id;
     }
 
-    public function setUserId($userId): void
+    public function setUserId($user_id): void
     {
-        $this->userId = $userId;
+        $this->user_id = $user_id;
+    }
+    public function getUser()
+    {
+        return new User($this->user_id);
     }
 
-    public function getAdId()
+    public function getAdid()
     {
-        return $this->adId;
+        return $this->ad_id;
     }
 
-    public function setAdId($adId): void
+    public function setAdId($ad_id): void
     {
-        $this->adId = $adId;
+        $this->ad_id = $ad_id;
     }
 
     public function getDate()
@@ -93,19 +94,27 @@ class Comment extends AbstractModel implements ModelInterface
         $this->message = $message;
     }
 
-    public function isActive()
-    {
-        return $this->active;
-    }
-
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
     public function commentSave()
     {
-        $comment = $this->commentSave();
+        $comment = new Comment();
+        $comment->setUserId($_SESSION['user_id']);
+        $comment->setAdId($_POST['ad_id']);
+        $comment->setMessage($_POST['comment']);
+        $comment->setDate($_POST['date']);
         $this->save();
+    }
+
+    public static function getAllComments($ad_id)
+    {
+        $db = new DBHelper();
+        $data = $db->select()->from(self::TABLE)->where('ad_id', $ad_id)->get();
+        $comment = [];
+        foreach ($data as $element) {
+            $comment = new Comment();
+            $comment->load($element['id']);
+            $comments[] = $comment;
+        }
+        return $comments; {
+        }
     }
 }
