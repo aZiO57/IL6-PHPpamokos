@@ -309,4 +309,9 @@ class Ad extends AbstractModel implements ModelInterface
             return false;
         }
     }
+
+    public function getAllComments()
+    {
+        return Comment::getAllComments($this->id);
+    }
 }

@@ -221,6 +221,7 @@ class Admin extends AbstractController implements ControllerInterface
     {
         $action = $_POST['action'];
         $ids = $_POST['ad_id'];
+
         if ($action == self::ACTIVE || self::NOT_ACTIVE) {
             foreach ($ids as $id) {
                 $ad = new Ad($id);
@@ -233,5 +234,6 @@ class Admin extends AbstractController implements ControllerInterface
                 $ad->delete();
             }
         }
+        Url::redirect('admin/ads');
     }
 }
