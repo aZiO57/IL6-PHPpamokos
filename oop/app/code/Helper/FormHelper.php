@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Helper;
 
 class FormHelper
 {
     private $form;
 
-    public function __construct($action, $method)
+    public function __construct(string $action, string $method)
     {
         $this->form = '<form action="' . BASE_URL . $action . '" method="' . $method . '">';
     }
 
 
-    public function input($data)
+    public function input(array $data): void
     {
         $this->form .= '<input ';
         foreach ($data as $attribute => $value) {
@@ -22,12 +24,12 @@ class FormHelper
         $this->form .= ' ><br><br>';
     }
 
-    public function textArea($name, $placeholder)
+    public function textArea(string $name, string $placeholder): void
     {
         $this->form .= '<textarea name="' . $name . '">' . $placeholder . '</textarea> <br>';
     }
 
-    public function select($data)
+    public function select(array $data): void
     {
         $this->form .= '<select name="' . $data['name'] . '">';
         foreach ($data['options'] as $key => $option) {
@@ -43,7 +45,7 @@ class FormHelper
         $this->form .= '</select>';
     }
 
-    public function getForm()
+    public function getForm(): string
     {
         $this->form .= '</form>';
         return $this->form;

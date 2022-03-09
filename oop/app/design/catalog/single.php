@@ -28,6 +28,11 @@ $ad = $this->data['ad']; ?>
                 <?= $ad->getDescription(); ?>
             </p>
         </div>
+        <?php if ($this->isUserLoged()) : ?>
+            <a href="<?= $this->url('message/chat/' . $ad->getUserId()) ?>">
+                Rasyti zinute savininkui
+            </a>
+        <?php endif; ?>
         <div class="comments-wrapper">
             <p>
                 <?= $this->data['comment_form'] ?>

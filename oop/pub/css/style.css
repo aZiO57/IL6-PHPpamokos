@@ -126,3 +126,33 @@ a .edit-ad {
 .comment_content:first-letter{
     text-transform:capitalize;
 }
+
+.message-box{
+    border: 1px solid #888888;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    width: 70%;
+}
+.my{
+    background: #ffa600;
+    margin-left: auto;
+}
+
+.him{
+    background: blanchedalmond;
+}
+.chat-box textarea{
+    width: 100%;
+}
+
+.btn.submit{
+    background: #348107;
+    border: 0;
+    border-radius: 0;
+}
+
+.last-message-body.bolt{
+    font-weight: bold;
+}

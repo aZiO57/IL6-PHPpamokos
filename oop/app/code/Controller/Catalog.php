@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controller;
 
 use Core\AbstractController;
@@ -13,7 +15,7 @@ use Core\Interfaces\ControllerInterface;
 class Catalog extends AbstractController implements ControllerInterface
 {
 
-    public function index()
+    public function index(): void
     {
         if (!empty($_GET['page'])) {
             $page = $_GET['page'];
@@ -27,7 +29,7 @@ class Catalog extends AbstractController implements ControllerInterface
         $this->render('catalog/all');
     }
 
-    public function show($slug)
+    public function show($slug): void
     {
         $ad = new Ad();
         $ad->loadBySlug($slug);
@@ -39,7 +41,7 @@ class Catalog extends AbstractController implements ControllerInterface
             'name' => 'adId',
             'value' => $ad->getId()
         ]);
-        $form->textArea('comment', null, 'Add comment', 'comment', 255);
+        $form->textArea('comment', 'Add comment', 'comment', 255);
         $form->input([
             'name' => 'submit',
             'type' => 'submit',
@@ -57,7 +59,7 @@ class Catalog extends AbstractController implements ControllerInterface
         }
     }
 
-    public function commentSave()
+    public function commentSave(): void
     {
         if (empty($_POST['comment'])) Url::redirect('catalog/show/' . $_GET['back']);
         if (!isset($_SESSION['user_id'])) {
@@ -78,7 +80,7 @@ class Catalog extends AbstractController implements ControllerInterface
         Url::redirect('catalog/show/' . $ad->getSlug());
     }
 
-    public function add()
+    public function add(): void
     {
         $form = new FormHelper('catalog/create/', 'POST');
 
@@ -130,7 +132,7 @@ class Catalog extends AbstractController implements ControllerInterface
         $this->render('catalog/create');
     }
 
-    public function create()
+    public function create(): void
     {
         if (empty($_POST['title'])) {
             die('Neuzpildyti duomenys');
@@ -164,7 +166,7 @@ class Catalog extends AbstractController implements ControllerInterface
     {
     }
 
-    public function update()
+    public function update(): void
     {
         $adId = $_POST['id'];
         $ad = new Ad();
@@ -184,7 +186,7 @@ class Catalog extends AbstractController implements ControllerInterface
         Url::redirect('/catalog/show/' . $ad->getSlug());
     }
 
-    public function edit($id)
+    public function edit(int $id): void
     {
         if (!isset($_SESSION['user_id'])) {
             Url::redirect('');

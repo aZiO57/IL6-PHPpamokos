@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Model;
 
+use Core\Interfaces\ModelInterface;
 use Helper\DBHelper;
 
 class City
 {
-    private $id;
+    private int $id;
 
-    private $name;
+    private string $name;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function load($id)
+    public function load(string $id): void
     {
         $db = new DBHelper();
         $city = $db->select()->from('cities')->where('id', $id)->getOne();
@@ -28,7 +31,7 @@ class City
         $this->name = $city['city_name'];
     }
 
-    public static function getCities()
+    public static function getCities(): array
     {
         $db = new DBHelper();
         $data = $db->select()->from('cities')->get();
