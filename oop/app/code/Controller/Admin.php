@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controller;
 
 use Core\AbstractController;
@@ -11,6 +13,7 @@ use Model\City;
 use Model\User;
 use Model\User as UserModel;
 use Core\Interfaces\ControllerInterface;
+use Helper\DBHelper;
 
 class Admin extends AbstractController implements ControllerInterface
 {
@@ -28,24 +31,24 @@ class Admin extends AbstractController implements ControllerInterface
         }
     }
 
-    public function index()
+    public function index(): void
     {
         $this->renderAdmin('index');
     }
 
-    public function users()
+    public function users(): void
     {
         $this->data['users'] = User::getAllUsers();
         $this->renderAdmin('users/list');
     }
 
-    public function ads()
+    public function ads(): void
     {
         $this->data['ads'] =  Ad::getAllAds();
         $this->renderAdmin('ads/list');
     }
 
-    public function useredit($id)
+    public function useredit(int $id): void
     {
         $user = new User();
         $user->load($id);
@@ -121,7 +124,7 @@ class Admin extends AbstractController implements ControllerInterface
         $this->renderAdmin('users/edit');
     }
 
-    public function userupdate()
+    public function userupdate(): void
     {
         $userId = $_POST['user_id'];
         $user = new UserModel();
@@ -147,7 +150,7 @@ class Admin extends AbstractController implements ControllerInterface
         Url::redirect('admin/users');
     }
 
-    public function adedit($id)
+    public function adedit(int $id): void
     {
         $ad = new Ad($id);
         $form = new FormHelper('admin/adupdate', 'POST');
@@ -200,7 +203,7 @@ class Admin extends AbstractController implements ControllerInterface
         $this->renderAdmin('ads/edit');
     }
 
-    public function adupdate()
+    public function adupdate(): void
     {
         $adId = $_POST['id'];
         $ad = new Ad($adId);
@@ -217,7 +220,7 @@ class Admin extends AbstractController implements ControllerInterface
         Url::redirect('admin/ads');
     }
 
-    public function massadsupdate()
+    public function massadsupdate(): void
     {
         $action = $_POST['action'];
         $ids = $_POST['ad_id'];

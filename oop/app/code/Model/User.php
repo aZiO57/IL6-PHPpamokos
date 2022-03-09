@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Model;
 
 use Helper\DBHelper;
@@ -10,23 +12,23 @@ use Core\Interfaces\ModelInterface;
 
 class User extends AbstractModel implements ModelInterface
 {
-    private $name;
+    private string $name;
 
-    private $lastName;
+    private string $lastName;
 
-    private $email;
+    private string $email;
 
-    private $password;
+    private string $password;
 
-    private $phone;
+    private int $phone;
 
-    private $cityId;
+    private int $cityId;
 
-    private $city;
+    private City $city;
 
-    private $active;
+    private bool $active;
 
-    private $roleId;
+    private int $roleId;
 
     protected const TABLE = 'users';
 
@@ -37,7 +39,7 @@ class User extends AbstractModel implements ModelInterface
         }
     }
 
-    public function assignData()
+    public function assignData(): void
     {
         $this->data = [
             'name' => $this->name,
@@ -52,97 +54,97 @@ class User extends AbstractModel implements ModelInterface
     }
 
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    public function setLastName($lastName)
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function getPhone()
+    public function getPhone(): int
     {
         return $this->phone;
     }
 
-    public function setPhone($phone)
+    public function setPhone(int $phone): void
     {
         $this->phone = $phone;
     }
 
-    public function getCityId()
+    public function getCityId(): int
     {
         return $this->cityId;
     }
 
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
 
-    public function setCityId($id)
+    public function setCityId(int $id): void
     {
         $this->cityId = $id;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->active;
     }
 
-    public function setActive($active)
+    public function setActive(int $active): void
     {
         $this->active = $active;
     }
 
-    public function setRoleId($id)
+    public function setRoleId(int $id): void
     {
         $this->roleId = $id;
     }
 
-    public function getRoleId()
+    public function getRoleId(): int
     {
         return $this->roleId;
     }
 
 
-    public function load($id)
+    public function load(int $id): User
     {
         $db = new DBHelper();
-        $data = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
+        $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->lastName = $data['last_name'];
@@ -157,7 +159,7 @@ class User extends AbstractModel implements ModelInterface
         return $this;
     }
 
-    public static function checkLoginCredentionals($email, $pass)
+    public static function checkLoginCredentionals(string $email, string $pass): ?int
     {
         $db = new DBHelper();
         $rez = $db
@@ -171,12 +173,11 @@ class User extends AbstractModel implements ModelInterface
         if (isset($rez['id'])) {
             return $rez['id'];
         } else {
-            return false;
+            return null;
         }
-        //return isset($rez['id']) ? $rez['id'] : false;
     }
 
-    public static function getAllUsers()
+    public static function getAllUsers(): array
     {
         $db = new DBHelper();
         $data = $db->select('id')->from(self::TABLE)->get();

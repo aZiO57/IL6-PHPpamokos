@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controller;
 
 use Helper\DBHelper;
@@ -13,18 +15,18 @@ use Core\Interfaces\ControllerInterface;
 
 class User extends AbstractController implements ControllerInterface
 {
-    public function index()
+    public function index(): void
     {
         $this->data['users'] = UserModel::getAllUsers();
         $this->render('user/list');
     }
 
-    public function show($id)
+    public function show(int $id): void
     {
         echo 'User controller ID: ' . $id;
     }
 
-    public function register()
+    public function register(): void
     {
 
         $form = new FormHelper('user/create', 'POST');
@@ -77,7 +79,7 @@ class User extends AbstractController implements ControllerInterface
         $this->render('user/register');
     }
 
-    public function edit()
+    public function edit(): void
     {
         if (!isset($_SESSION['user_id'])) {
             Url::redirect('user/login');
@@ -146,7 +148,7 @@ class User extends AbstractController implements ControllerInterface
         $this->render('user/register');
     }
 
-    public function update()
+    public function update(): void
     {
         $userId = $_SESSION['user_id'];
         $user = new UserModel();

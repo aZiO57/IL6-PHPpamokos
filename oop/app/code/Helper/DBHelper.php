@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Helper;
 
 use Helper\Logger;
 
 class DBHelper
 {
-    private $conn;
+    private \PDO $conn;
 
-    private $sql;
+    private string $sql;
 
     public function __construct()
     {
@@ -22,55 +24,58 @@ class DBHelper
         }
     }
 
-    public function select($fields = '*')
+    public function select(string $fields = '*'): DBHelper
     {
         $this->sql .= 'SELECT ' . $fields . ' ';
         return $this;
     }
 
-    public function from($table)
+    public function from(string $table): DBHelper
     {
         $this->sql .= 'FROM ' . $table . ' ';
         return $this;
     }
 
-    public function where($field, $value, $operator = '=')
+    public function where(string $field, string $value, ?string $operator = null): DBHelper
     {
+        if ($operator === null) {
+            $operator = '=';
+        }
         $this->sql .= ' WHERE ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
 
-    public function andWhere($field, $value, $operator = '=')
+    public function andWhere($field, $value, $operator = '='): DBHelper
     {
         $this->sql .= ' AND ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
 
-    public function orWhere($field, $value, $operator = '=')
+    public function orWhere($field, $value, $operator = '='): DBHelper
     {
         $this->sql .= ' OR ' . $field . $operator . '"' . $value . '"';
         return $this;
     }
 
-    public function orderBy($field, $type)
+    public function orderBy(string $field, string $type): DBHelper
     {
         $this->sql .= ' ORDER BY ' . $field . ' ' . $type;
         return $this;
     }
 
-    public function delete()
+    public function delete(): DBHelper
     {
         $this->sql .= 'DELETE ';
         return $this;
     }
 
-    public function get()
+    public function get(): array
     {
         $rez = $this->exec();
         return $rez->fetchAll();
     }
 
-    public function exec()
+    public function exec(): \PDOStatement
     {
         if (DEBUG_MODE) {
             Logger::log($this->sql);
@@ -78,7 +83,7 @@ class DBHelper
         return $this->conn->query($this->sql);
     }
 
-    public function getOne()
+    public function getOne(): string
     {
         $rez = $this->exec();
         $data = $rez->fetchAll();
@@ -89,7 +94,7 @@ class DBHelper
         }
     }
 
-    public function insert($table, $data)
+    public function insert(array $table, array $data): DBHelper
     {
         $this->sql .= 'INSERT INTO ' . $table .
             ' (' . implode(',', array_keys($data)) . ')
@@ -97,7 +102,7 @@ class DBHelper
         return $this;
     }
 
-    public function update($table, $data)
+    public function update(string $table, array $data): DBHelper
     {
         $this->sql .= 'UPDATE ' . $table . ' SET ';
         $values = [];
@@ -108,13 +113,13 @@ class DBHelper
         return $this;
     }
 
-    public function limit($number)
+    public function limit(int $number): DBHelper
     {
         $this->sql .= ' LIMIT ' . $number;
         return $this;
     }
 
-    public function offset($page)
+    public function offset(int $page): DBHelper
     {
         $this->sql .= ' OFFSET ' . $page;
         return $this;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Model;
 
 use Core\AbstractModel;
@@ -10,20 +12,20 @@ class Comment extends AbstractModel implements ModelInterface
 {
     protected const TABLE = 'comment';
 
-    private $user_id;
+    private int $user_id;
 
-    private $ad_id;
+    private int $ad_id;
 
-    private $date;
+    private int $date;
 
-    private $message;
+    private string $message;
 
 
 
-    public function load($id)
+    public function load(int $id): object
     {
         $db = new DBHelper();
-        $comment = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
+        $comment = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         if (!empty($comment)) {
             $this->id = $comment['id'];
             $this->user_id = $comment['user_id'];
@@ -31,70 +33,68 @@ class Comment extends AbstractModel implements ModelInterface
             $this->message = $comment['message'];
             $this->date = $comment['date'];
         }
-
         return $this;
     }
 
-    public function assignData()
+    public function assignData(): void
     {
         $this->data = [
             'user_id' => $this->user_id,
             'ad_id' => $this->ad_id,
             'message' => $this->message,
-            // 'date' => $this->date
         ];
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->user_id;
     }
 
-    public function setUserId($user_id): void
+    public function setUserId(int $user_id): void
     {
         $this->user_id = $user_id;
     }
-    public function getUser()
+    public function getUser(): User
     {
         return new User($this->user_id);
     }
 
-    public function getAdid()
+    public function getAdid(): int
     {
         return $this->ad_id;
     }
 
-    public function setAdId($ad_id): void
+    public function setAdId(int $ad_id): void
     {
         $this->ad_id = $ad_id;
     }
 
-    public function getDate()
+    public function getDate(): int
     {
         return $this->date;
     }
 
-    public function setDate($date): void
+    public function setDate(int $date): void
     {
         $this->date = $date;
     }
 
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    public function setMessage($message): void
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
 
-    public function commentSave()
+    public function commentSave(): void
     {
         $comment = new Comment();
         $comment->setUserId($_SESSION['user_id']);
@@ -104,7 +104,7 @@ class Comment extends AbstractModel implements ModelInterface
         $this->save();
     }
 
-    public static function getAllComments($ad_id)
+    public static function getAllComments(string $ad_id): Comment
     {
         $db = new DBHelper();
         $data = $db->select()->from(self::TABLE)->where('ad_id', $ad_id)->get();

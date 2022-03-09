@@ -1,41 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core;
 
 use Helper\Url;
+use Model\Message;
 use Model\User;
 
 class AbstractController
 {
-    protected $data;
+    protected array $data;
 
     public function __construct()
     {
         $this->data = [];
         $this->data['title'] = 'Autominusas.lt';
         $this->data['meta_description'] = '';
+        if ($this->isUserLoged()) {
+            $this->data['new_messages'] = Message::getUnreadMessagesCount();
+        }
     }
 
-    protected function render($template)
+    protected function render(string $template): void
     {
         include_once PROJECT_ROOT_DIR . '/app/design/parts/header.php';
         include_once PROJECT_ROOT_DIR . '/app/design/' . $template . '.php';
         include_once PROJECT_ROOT_DIR . '/app/design/parts/footer.php';
     }
 
-    protected function renderAdmin($template)
+    protected function renderAdmin(string $template): void
     {
         include_once PROJECT_ROOT_DIR . '/app/design/admin/parts/header.php';
         include_once PROJECT_ROOT_DIR . '/app/design/admin/' . $template . '.php';
         include_once PROJECT_ROOT_DIR . '/app/design/admin/parts/footer.php';
     }
 
-    protected function isUserLoged()
+    protected function isUserLoged(): bool
     {
         return isset($_SESSION['user_id']);
     }
 
-    protected function isUserAdmin()
+    protected function isUserAdmin(): bool
     {
         if ($this->isUserLoged()) {
             $user = new User();
@@ -48,7 +54,7 @@ class AbstractController
         return false;
     }
 
-    public function url($path, $param = null)
+    public function url(string $path, string $param = null): string
     {
         return Url::link($path, $param);
     }
