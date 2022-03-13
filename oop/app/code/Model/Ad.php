@@ -201,18 +201,18 @@ class Ad extends AbstractModel implements ModelInterface
         if (!empty($ad)) {
             $this->id = $ad['id'];
             $this->title = $ad['title'];
-            $this->manufacturerId = $ad['manufacturer_id'];
+            $this->manufacturerId = intval($ad['manufacturer_id']);
             $this->description = $ad['description'];
-            $this->modelId = $ad['model_id'];
-            $this->price = $ad['price'];
-            $this->year = $ad['years'];
-            $this->typeId = $ad['type_id'];
-            $this->userId = $ad['user_id'];
+            $this->modelId = intval($ad['model_id']);
+            $this->price = (float)$ad['price'];
+            $this->year = (int) $ad['years'];
+            $this->typeId = intval($ad['type_id']);
+            $this->userId = intval($ad['user_id']);
             $this->image = $ad['image'];
-            $this->active = $ad['active'];
+            $this->active = (int) $ad['active'];
             $this->slug = $ad['slug'];
-            $this->vin = $ad['vin'];
-            $this->views = $ad['views'];
+            $this->vin = (int) $ad['vin'];
+            $this->views = (int)$ad['views'];
         }
 
         return $this;
@@ -245,7 +245,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
@@ -269,7 +269,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load(intval($element['id']));
             $ads[] = $ad;
         }
         return $ads;
@@ -287,7 +287,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
@@ -312,8 +312,8 @@ class Ad extends AbstractModel implements ModelInterface
         }
     }
 
-    public function getAllComments(): Comment
+    public function getAllComments(): array
     {
-        return Comment::getAllComments($this->id);
+        return Comment::getAllComments((int)$this->id);
     }
 }

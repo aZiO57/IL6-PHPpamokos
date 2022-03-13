@@ -83,7 +83,7 @@ class DBHelper
         return $this->conn->query($this->sql);
     }
 
-    public function getOne(): string
+    public function getOne(): array
     {
         $rez = $this->exec();
         $data = $rez->fetchAll();
@@ -94,7 +94,7 @@ class DBHelper
         }
     }
 
-    public function insert(array $table, array $data): DBHelper
+    public function insert(string $table, array $data): DBHelper
     {
         $this->sql .= 'INSERT INTO ' . $table .
             ' (' . implode(',', array_keys($data)) . ')

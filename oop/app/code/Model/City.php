@@ -23,13 +23,15 @@ class City
         return $this->name;
     }
 
-    public function load(string $id): void
+    public function load(int $id): City
     {
         $db = new DBHelper();
-        $city = $db->select()->from('cities')->where('id', $id)->getOne();
-        $this->id = $city['id'];
+        $city = $db->select()->from('cities')->where('id', (string) $id)->getOne();
+        $this->id = (int) $city['id'];
         $this->name = $city['city_name'];
+        return $this;
     }
+
 
     public static function getCities(): array
     {
@@ -38,7 +40,7 @@ class City
         $cities = [];
         foreach ($data as $element) {
             $city = new City();
-            $city->load($element['id']);
+            $city->load((int)$element['id']);
             $cities[] = $city;
         }
         return $cities;
