@@ -128,7 +128,7 @@ class Admin extends AbstractController implements ControllerInterface
     {
         $userId = $_POST['user_id'];
         $user = new UserModel();
-        $user->load($userId);
+        $user->load((int)$userId);
 
         $user->setName($_POST['name']);
         $user->setLastName($_POST['last_name']);

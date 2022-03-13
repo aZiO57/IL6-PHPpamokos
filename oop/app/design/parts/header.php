@@ -20,11 +20,14 @@
                     <a href="<?php echo $this->url(''); ?>">Home Page</a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('catalog') ?>">All ads</a>
+                    <a href="<?php echo $this->url('catalog') ?>">All advertisements</a>
                 </li>
                 <?php if ($this->isUserLoged()) : ?>
                     <li>
-                        <a href="<?php echo $this->url('catalog/add') ?>">Add New</a>
+                        <a href="<?= $this->url('message') ?>">Messages(<?= $this->data['new_messages'] ?>)</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url('catalog/add') ?>">Add new advertisement</a>
                     </li>
                     <li>
                         <a href="<?php echo $this->url('user/logout') ?>">Logout</a>

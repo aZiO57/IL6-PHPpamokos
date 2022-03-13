@@ -22,14 +22,14 @@ class Catalog extends AbstractController implements ControllerInterface
         } else {
             $page = 1;
         }
-        $this->data['ads'] = Ad::getAds($page);
+        $this->data['ads'] = (int) Ad::getAds($page);
         $adsCount = Ad::getAdsCount();
         $this->data['pageCount'] = ceil($adsCount / 5);
         $this->data['currentPage'] = $page;
         $this->render('catalog/all');
     }
 
-    public function show($slug): void
+    public function show(string $slug): void
     {
         $ad = new Ad();
         $ad->loadBySlug($slug);
@@ -51,7 +51,7 @@ class Catalog extends AbstractController implements ControllerInterface
         $this->data['title'] = $ad->getTitle();
         $this->data['meta_description'] = $ad->getTitle();
         if ($this->data['ad']) {
-            $ad->addView($this->data['ad']->getId());
+            $ad->addView((int)$this->data['ad']->getId());
             $this->data['comments'] = $ad->getAllComments();
             $this->render('catalog/single');
         } else {
@@ -68,14 +68,14 @@ class Catalog extends AbstractController implements ControllerInterface
         }
 
         $comment = new Comment();
-        $comment->setUserId($_SESSION['user_id']);
-        $comment->setAdId($_POST['adId']);
+        $comment->setUserId((int)$_SESSION['user_id']);
+        $comment->setAdId((int)$_POST['adId']);
         $comment->setMessage($_POST['comment']);
         $comment->save();
 
         unset($_SESSION['comment_error']);
         $ad = new Ad();
-        $ad->load($_POST['adId']);
+        $ad->load((int)$_POST['adId']);
         $ad->getSlug();
         Url::redirect('catalog/show/' . $ad->getSlug());
     }

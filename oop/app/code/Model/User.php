@@ -146,14 +146,14 @@ class User extends AbstractModel implements ModelInterface
         $db = new DBHelper();
         $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->lastName = $data['last_name'];
-        $this->phone = $data['phone'];
-        $this->email = $data['email'];
-        $this->password = $data['password'];
-        $this->cityId = $data['city_id'];
-        $this->active = $data['active'];
-        $this->roleId = $data['role_id'];
+        $this->name = (string) $data['name'];
+        $this->lastName = (string) $data['last_name'];
+        $this->phone = (int) $data['phone'];
+        $this->email = (string)$data['email'];
+        $this->password = (string)$data['password'];
+        $this->cityId = (int) $data['city_id'];
+        $this->active = (bool)$data['active'];
+        $this->roleId = (int) $data['role_id'];
         $city = new City();
         $this->city = $city->load($this->cityId);
         return $this;
@@ -171,7 +171,7 @@ class User extends AbstractModel implements ModelInterface
             ->getOne();
 
         if (isset($rez['id'])) {
-            return $rez['id'];
+            return (int)$rez['id'];
         } else {
             return null;
         }

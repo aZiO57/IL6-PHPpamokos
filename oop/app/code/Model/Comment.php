@@ -28,10 +28,10 @@ class Comment extends AbstractModel implements ModelInterface
         $comment = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         if (!empty($comment)) {
             $this->id = $comment['id'];
-            $this->user_id = $comment['user_id'];
-            $this->adId = $comment['ad_id'];
-            $this->message = $comment['message'];
-            $this->date = $comment['date'];
+            $this->user_id = (int) $comment['user_id'];
+            $this->adId = (int) $comment['ad_id'];
+            $this->message = (string) $comment['message'];
+            $this->date = (int) $comment['date'];
         }
         return $this;
     }
@@ -97,24 +97,23 @@ class Comment extends AbstractModel implements ModelInterface
     public function commentSave(): void
     {
         $comment = new Comment();
-        $comment->setUserId($_SESSION['user_id']);
-        $comment->setAdId($_POST['ad_id']);
+        $comment->setUserId((int)$_SESSION['user_id']);
+        $comment->setAdId((int)$_POST['ad_id']);
         $comment->setMessage($_POST['comment']);
         $comment->setDate($_POST['date']);
         $this->save();
     }
 
-    public static function getAllComments(string $ad_id): Comment
+    public static function getAllComments(int $ad_id): array
     {
         $db = new DBHelper();
-        $data = $db->select()->from(self::TABLE)->where('ad_id', $ad_id)->get();
-        $comment = [];
+        $data = $db->select()->from(self::TABLE)->where('ad_id', (string)$ad_id)->get();
+        $comments = [];
         foreach ($data as $element) {
             $comment = new Comment();
-            $comment->load($element['id']);
+            $comment->load((int)$element['id']);
             $comments[] = $comment;
         }
-        return $comments; {
-        }
+        return $comments;
     }
 }
