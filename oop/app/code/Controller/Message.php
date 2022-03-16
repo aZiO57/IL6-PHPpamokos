@@ -38,7 +38,7 @@ class Message extends AbstractController implements ControllerInterface
             return $item2['message']->getId() <=> $item1['message']->getId();
         });
         $this->data['chat'] = $chats;
-        $this->render('messages/all');
+        $this->render('message/all');
     }
 
     public function chat($chatFriendId)
@@ -46,14 +46,14 @@ class Message extends AbstractController implements ControllerInterface
         $this->data['messages'] = MessageModel::getUserMessagesWithFriend($chatFriendId);
         MessageModel::makeSeen($chatFriendId, $_SESSION['user_id']);
         $this->data['receiver_id'] = $chatFriendId;
-        $this->render('messages/chat');
+        $this->render('message/chat');
     }
 
     public function send()
     {
         $message = new MessageModel();
         $message->setMessage($_POST['message']);
-        $message->setreceiverId($_POST['receiver_id']);
+        $message->setreceiverId((bool)$_POST['receiver_id']);
         $message->setSenderId($_SESSION['user_id']);
         $message->setSeen(0);
         $message->setDate(date('Y-m-d h:i:s'));

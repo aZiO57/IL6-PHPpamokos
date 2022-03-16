@@ -51,7 +51,7 @@ class Admin extends AbstractController implements ControllerInterface
     public function useredit(int $id): void
     {
         $user = new User();
-        $user->load($id);
+        $user->load((int)$id);
 
         $form = new FormHelper('admin/userupdate', 'POST');
         $form->input([
@@ -131,10 +131,10 @@ class Admin extends AbstractController implements ControllerInterface
         $user->load((int)$userId);
 
         $user->setName($_POST['name']);
-        $user->setLastName($_POST['last_name']);
-        $user->setPhone($_POST['phone']);
-        $user->setCityId($_POST['city_id']);
-        $user->setActive($_POST['active']);
+        $user->setLastName((string)$_POST['last_name']);
+        $user->setPhone((int)$_POST['phone']);
+        $user->setCityId((int)$_POST['city_id']);
+        $user->setActive((bool)$_POST['active']);
 
         if ($_POST['password'] != '' && Validator::checkPassword($_POST['password'], $_POST['password2'])) {
             $user->setPassword(md5($_POST['password']));
@@ -212,10 +212,10 @@ class Admin extends AbstractController implements ControllerInterface
         $ad->setManufacturerId(1);
         $ad->setModelId(1);
         $ad->setImage($_POST['image']);
-        $ad->setPrice($_POST['price']);
-        $ad->setYear($_POST['years']);
+        $ad->setPrice((float)$_POST['price']);
+        $ad->setYear((int)$_POST['years']);
         $ad->setTypeId(1);
-        $ad->setActive($_POST['active']);
+        $ad->setActive((string)$_POST['active']);
         $ad->save();
         Url::redirect('admin/ads');
     }

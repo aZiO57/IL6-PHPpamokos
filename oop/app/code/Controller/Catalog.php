@@ -11,6 +11,7 @@ use Helper\Url;
 use Model\Ad;
 use Model\Comment;
 use Core\Interfaces\ControllerInterface;
+use Model\Rating;
 
 class Catalog extends AbstractController implements ControllerInterface
 {
@@ -32,8 +33,11 @@ class Catalog extends AbstractController implements ControllerInterface
     public function show(string $slug): void
     {
         $ad = new Ad();
-        $ad->loadBySlug($slug);
 
+        if ($ad->loadBySlug($slug) === null) {
+            $this->render('parts/errors/error404');
+            return;
+        }
         $this->data['ad'] = $ad;
         $form = new FormHelper('catalog/commentSave', 'POST');
         $form->input([
@@ -45,11 +49,33 @@ class Catalog extends AbstractController implements ControllerInterface
         $form->input([
             'name' => 'submit',
             'type' => 'submit',
-            'value' => 'Comment'
+            'value' => 'Comment Ad'
         ]);
+
+        $this->data['rated'] = false;
+        $rate = new Rating();
+        $isRateNull = $rate->loadByUserAndAd($_SESSION['user_id'], $ad->getId());
+        if ($isRateNull !== null) {
+            $this->data['rated'] = true;
+            $this->data['user_rate'] = $rate->getRating();
+        }
+
+        $ratings = Rating::getRatingsByAd($ad->getId());
+        $sum = 0;
+        foreach ($ratings as $rate) {
+            $sum += $rate['rating'];
+        }
+
+        $this->data['ad_rating'] = 0;
+        $this->data['rating_count'] = count($ratings);
+        if ($sum > 0) {
+            $this->data['ad_rating'] = $sum / $this->data['rating_count'];
+        }
+
         $this->data['comment_form'] = $form->getForm();
         $this->data['title'] = $ad->getTitle();
         $this->data['meta_description'] = $ad->getTitle();
+
         if ($this->data['ad']) {
             $ad->addView((int)$this->data['ad']->getId());
             $this->data['comments'] = $ad->getAllComments();
@@ -250,5 +276,16 @@ class Catalog extends AbstractController implements ControllerInterface
 
         $this->data['form'] = $form->getForm();
         $this->render('catalog/create');
+    }
+
+    public function rate()
+    {
+        $rate = new Rating();
+        $rate->loadByUserAndAd($_SESSION['user_id'], $_POST['ad_id']);
+        $rate->setUserId((int)$_SESSION['user_id']);
+        $rate->setAdId((int)$_POST['ad_id']);
+        $rate->setRating((int)$_POST['rate']);
+        $rate->save();
+        URL::redirect('catalog/show/' . $_GET['back']);
     }
 }

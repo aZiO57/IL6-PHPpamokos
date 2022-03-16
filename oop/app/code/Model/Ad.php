@@ -41,7 +41,7 @@ class Ad extends AbstractModel implements ModelInterface
     public function __construct($id = null)
     {
         if ($id !== null) {
-            $this->load($id);
+            $this->load((int)$id);
         }
     }
 
@@ -152,7 +152,7 @@ class Ad extends AbstractModel implements ModelInterface
 
     public function setActive(string $active): void
     {
-        $this->active = $active;
+        $this->active = (int) $active;
     }
 
     public function getSlug(): string
@@ -232,7 +232,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
