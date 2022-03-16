@@ -9,6 +9,7 @@ use Helper\FormHelper;
 use Model\City;
 use Core\AbstractModel;
 use Core\Interfaces\ModelInterface;
+use Stringable;
 
 class User extends AbstractModel implements ModelInterface
 {
@@ -125,7 +126,7 @@ class User extends AbstractModel implements ModelInterface
         return $this->active;
     }
 
-    public function setActive(int $active): void
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }
@@ -184,7 +185,7 @@ class User extends AbstractModel implements ModelInterface
         $users = [];
         foreach ($data as $element) {
             $user = new User();
-            $user->load($element['id']);
+            $user->load((int)$element['id']);
             $users[] = $user;
         }
 

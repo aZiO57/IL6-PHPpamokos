@@ -55,7 +55,7 @@ class Message extends AbstractModel implements ModelInterface
     /**
      * @return int
      */
-    public function getreceiverId(): int
+    public function getReceiverId(): int
     {
         return $this->receiverId;
     }
@@ -63,7 +63,7 @@ class Message extends AbstractModel implements ModelInterface
     /**
      * @param int $receiverId
      */
-    public function setreceiverId(int $receiverId): void
+    public function setReceiverId($receiverId): void
     {
         $this->receiverId = $receiverId;
     }
@@ -139,9 +139,9 @@ class Message extends AbstractModel implements ModelInterface
         $userId = $_SESSION['user_id'];
         $data = $db->select()->from(self::TABLE)->where('sender_id', $userId)->orWhere('receiver_id', $userId)->get();
         $messages = [];
-        foreach ($data as $elemetn) {
+        foreach ($data as $element) {
             $message = new Message();
-            $message->load($elemetn['id']);
+            $message->load($element['id']);
             $messages[] = $message;
         }
         return $messages;

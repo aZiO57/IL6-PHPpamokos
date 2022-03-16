@@ -7,7 +7,7 @@
             </div>
             <?php $class = '';
             if (
-                $chat['message']->getReseiverId() == $_SESSION['user_id'] &&
+                $chat['message']->getReceiverId() == $_SESSION['user_id'] &&
                 $chat['message']->isSeen() == 0
             ) {
                 $class = 'bolt';
