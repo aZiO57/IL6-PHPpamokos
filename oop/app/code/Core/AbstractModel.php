@@ -44,7 +44,7 @@ class AbstractModel
         $db->insert(static::TABLE, $this->data)->exec();
     }
 
-    public function assignData(): void
+    public function assignData()
     {
         $this->data = [];
     }

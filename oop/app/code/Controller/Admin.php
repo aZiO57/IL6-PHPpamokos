@@ -134,7 +134,7 @@ class Admin extends AbstractController implements ControllerInterface
         $user->setLastName((string)$_POST['last_name']);
         $user->setPhone((int)$_POST['phone']);
         $user->setCityId((int)$_POST['city_id']);
-        $user->setActive((bool)$_POST['active']);
+        $user->setActive($_POST['active']);
 
         if ($_POST['password'] != '' && Validator::checkPassword($_POST['password'], $_POST['password2'])) {
             $user->setPassword(md5($_POST['password']));

@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li class="logo">
-                    <img src="https://codeacademy.lt/wp-content/themes/codeacademy/dist/images/codeacademy-black.svg">
+                    <img src="https://freesvg.org/img/VintageCar.png" height=50>
                 </li>
                 <li>
                     <a href="<?php echo $this->url(''); ?>">Home Page</a>
@@ -28,6 +28,9 @@
                     </li>
                     <li>
                         <a href="<?php echo $this->url('catalog/add') ?>">Add new advertisement</a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('user/favorite') ?>">Favorite ads</a>
                     </li>
                     <li>
                         <a href="<?php echo $this->url('user/logout') ?>">Logout</a>

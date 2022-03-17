@@ -12,6 +12,7 @@ use Model\Ad;
 use Model\Comment;
 use Core\Interfaces\ControllerInterface;
 use Model\Rating;
+use Model\SavedAd;
 
 class Catalog extends AbstractController implements ControllerInterface
 {
@@ -71,7 +72,11 @@ class Catalog extends AbstractController implements ControllerInterface
         if ($sum > 0) {
             $this->data['ad_rating'] = $sum / $this->data['rating_count'];
         }
-
+        if ($this->isUserLoged()) {
+            $savedAd = new SavedAd();
+            $savedAd = $savedAd->loadByUserAndAd($_SESSION['user_id'], $ad->getId());
+            $this->data['saved_ad'] = $savedAd;
+        }
         $this->data['comment_form'] = $form->getForm();
         $this->data['title'] = $ad->getTitle();
         $this->data['meta_description'] = $ad->getTitle();
@@ -286,6 +291,20 @@ class Catalog extends AbstractController implements ControllerInterface
         $rate->setAdId((int)$_POST['ad_id']);
         $rate->setRating((int)$_POST['rate']);
         $rate->save();
-        URL::redirect('catalog/show/' . $_GET['back']);
+        URL::redirect('catalog/show/' . $_GET['back']); // blogai
+    }
+
+    public function favorite()
+    {
+        $adId = $_POST['ad_id'];
+        $savedAd = new SavedAd();
+        $saved = $savedAd->loadByUserAndAd($_SESSION['user_id'], $adId);
+        if ($saved !== null) {
+            $saved->delete();
+        } else {
+            $savedAd->setAdId((int)$adId);
+            $savedAd->setUserId($_SESSION['user_id']);
+            $savedAd->save();
+        }
     }
 }
