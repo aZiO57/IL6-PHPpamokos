@@ -156,3 +156,8 @@ a .edit-ad {
 .last-message-body.bolt{
     font-weight: bold;
 }
+
+.logo{
+    width: 25px;
+    height: 30px;
+}

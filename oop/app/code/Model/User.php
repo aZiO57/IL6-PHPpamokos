@@ -126,7 +126,7 @@ class User extends AbstractModel implements ModelInterface
         return $this->active;
     }
 
-    public function setActive(bool $active): void
+    public function setActive(int $active): void
     {
         $this->active = $active;
     }
@@ -145,15 +145,15 @@ class User extends AbstractModel implements ModelInterface
     public function load(int $id): User
     {
         $db = new DBHelper();
-        $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
+        $data = $db->select()->from(self::TABLE)->where((string)'id', (string) $id)->getOne();
         $this->id = $data['id'];
         $this->name = (string) $data['name'];
         $this->lastName = (string) $data['last_name'];
         $this->phone = (int) $data['phone'];
-        $this->email = (string)$data['email'];
-        $this->password = (string)$data['password'];
+        $this->email = (string) $data['email'];
+        $this->password = (string) $data['password'];
         $this->cityId = (int) $data['city_id'];
-        $this->active = (bool)$data['active'];
+        $this->active = (bool) $data['active'];
         $this->roleId = (int) $data['role_id'];
         $city = new City();
         $this->city = $city->load($this->cityId);
