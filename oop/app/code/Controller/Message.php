@@ -19,6 +19,7 @@ class Message extends AbstractController implements ControllerInterface
 
     public function index()
     {
+
         $messages = MessageModel::getUserRelatedMessages();
         $chats = [];
 
@@ -53,7 +54,7 @@ class Message extends AbstractController implements ControllerInterface
     {
         $message = new MessageModel();
         $message->setMessage($_POST['message']);
-        $message->setreceiverId((bool)$_POST['receiver_id']);
+        $message->setreceiverId($_POST['receiver_id']);
         $message->setSenderId($_SESSION['user_id']);
         $message->setSeen(0);
         $message->setDate(date('Y-m-d h:i:s'));

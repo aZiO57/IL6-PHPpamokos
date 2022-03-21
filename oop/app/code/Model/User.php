@@ -146,7 +146,7 @@ class User extends AbstractModel implements ModelInterface
     {
         $db = new DBHelper();
         $data = $db->select()->from(self::TABLE)->where((string)'id', (string) $id)->getOne();
-        $this->id = $data['id'];
+        $this->id = (string) $data['id'];
         $this->name = (string) $data['name'];
         $this->lastName = (string) $data['last_name'];
         $this->phone = (int) $data['phone'];
