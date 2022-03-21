@@ -15,9 +15,10 @@ nav ul li{
 nav ul li a {
     text-decoration: none;
     color: #0000ff;
-    font-size:20px;
+    font-size: 20px;
     border-right: 1px solid #000;
     padding-right: 20px;
+    line-height: 84px;
 }
 
 footer{
@@ -158,6 +159,8 @@ a .edit-ad {
 }
 
 .logo{
-    width: 25px;
-    height: 30px;
+    margin-top: -10px;
+    margin-left: -10px;
+    height: auto;
+    width: 100px;
 }

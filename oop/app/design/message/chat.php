@@ -14,7 +14,7 @@
         <form action="<?= $this->url('message/send') ?>" method="POST">
             <div>
                 <textarea name="message"></textarea>
-                <input type="hidden" name="reseiver_id" value="<?= $this->data['reseiver_id'] ?>">
+                <input type="hidden" name="receiver_id" value="<?= $this->data['receiver_id'] ?>">
             </div>
             <input type="submit" value="Send" class="btn submit">
         </form>

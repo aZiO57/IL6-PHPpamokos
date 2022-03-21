@@ -24,7 +24,7 @@ class Catalog extends AbstractController implements ControllerInterface
         } else {
             $page = 1;
         }
-        $this->data['ads'] = (int) Ad::getAds($page);
+        $this->data['ads'] = Ad::getAds((int)$page);
         $adsCount = Ad::getAdsCount();
         $this->data['pageCount'] = ceil($adsCount / 5);
         $this->data['currentPage'] = $page;
@@ -291,7 +291,9 @@ class Catalog extends AbstractController implements ControllerInterface
         $rate->setAdId((int)$_POST['ad_id']);
         $rate->setRating((int)$_POST['rate']);
         $rate->save();
-        URL::redirect('catalog/show/' . $_GET['back']); // blogai
+        $ad = new Ad();
+        $ad->load((int)$_POST['ad_id']);
+        URL::redirect('catalog/show/' . $ad->getSlug());
     }
 
     public function favorite()

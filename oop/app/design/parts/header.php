@@ -13,8 +13,8 @@
         </div>
         <nav>
             <ul>
-                <li class="logo">
-                    <img src="https://freesvg.org/img/VintageCar.png" height=50>
+                <li>
+                    <img class="logo" src="https://freesvg.org/img/VintageCar.png">
                 </li>
                 <li>
                     <a href="<?php echo $this->url(''); ?>">Home Page</a>
