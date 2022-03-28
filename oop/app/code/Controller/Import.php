@@ -15,7 +15,7 @@ class Import extends AbstractController
         $adsArray = CsvParser::parseCsv($csvPath);
         if ($adsArray !== FALSE) {
             foreach ($adsArray as $adData) {
-                $$ad = new Ad();
+                $ad = new Ad();
                 $slug = Url::slug($adData['title']);
                 while (!Ad::isValueUnic('slug', $slug)) {
                     $slug = $slug . rand(0, 100);
@@ -40,3 +40,4 @@ class Import extends AbstractController
         }
     }
 }
+//neveikia, pataisyti !
