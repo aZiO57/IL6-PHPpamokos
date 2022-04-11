@@ -4,6 +4,7 @@
     <title><?= $this->data['title'] ?> </title>
     <meta name="description" content="<?= $this->data['meta_description'] ?>">
     <link rel="stylesheet" href="<?php echo BASE_URL_WITHOUT_INDEX_PHP . '/pub/css/style.css'; ?>">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
