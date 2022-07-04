@@ -1,5 +1,5 @@
 <?php include 'parts/header.php'; ?>
-<form action="submitform.php" method="post">
+<form action="submitForm.php" method="post">
     <input type="text" name="name" placeholder="Name"><br>
     <input type="text" name="surname" placeholder="Surname"><br>
     <input type="email" name="email" placeholder="Email"><br>
