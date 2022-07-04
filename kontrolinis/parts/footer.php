@@ -1,4 +1,4 @@
-<!-- </div>
+</div>
 <div class="footer">
     <div class="copy-rights">
         <center>Kontrolinio forma <?php  ?></center>
@@ -6,4 +6,4 @@
 </div>
 </body>
 
-</html> -->
+</html>
